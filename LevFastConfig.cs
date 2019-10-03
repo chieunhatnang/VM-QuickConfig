@@ -22,7 +22,7 @@ namespace LowEndViet.com_VPS_Tool
         #region Final variables
         static readonly string APPNAME = "VM QuickConfig";
         public readonly string VERSION = "1.2";
-        static readonly string GITHOME = "abc";
+        static readonly string GITHOME = "https://github.com/chieunhatnang/VM-QuickConfig";
 
         static readonly string REGSTARTUP = "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run\\";
         static readonly string REGLEV = "Software\\LEV\\VMQuickConfig";
