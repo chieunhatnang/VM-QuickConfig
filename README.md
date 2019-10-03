@@ -1,0 +1,53 @@
+# VM-QuickConfig
+
+## Quick and easy configuration tool for Windows VPS.
+
+You will find almost every settings you need when you setup your VPS at the first time in this tool.
+
+---
+## Feature
+### Network config: 
+- Static IP/DHCP
+- IP/Netmask/Gateway/DNS
+### Password tool
+- You can change the password without knowing the old password. *Note*: Password must be at least 8 characters and contains both UPPERCASE, lowercase and number.
+### Disk extender tool
+- If you resize your disk on the VM, Windows may not recognize the new extended part. This tool will help you extend the disk to full capacity.
+### Windows optimization
+Some optimizations and settings that you may need
+- Disable UAC
+- Turn off Internet Explorer ESC.
+- Disable update
+- Show all icon on the tray
+- Turn off firewall
+- Disable sleep
+- Disable hiberfil.sys file to save the disk
+- Disable recovery at logon when Windows shutdown unexpectedly
+- Disable driver signature to allow you install driver from third-party provider
+- Optimizing Remote Desktop Protocol for smoother remote
+- Delete temporary folder
+### Easy software installing tool
+Some popular softwares are integrated for easier install. They are set to silent install so they will not ask any questions.
+#### Browsers
+- Google Chrome
+- Firefox
+- Opera
+- Brave
+- Cốc cốc
+- Tor
+#### SSH and IP faking tool
+- Proxifier
+- Bitvise Tunnelier
+- Putty
+#### Download tool
+- Internet download manager
+- 4K Video downloader
+- uTorrent
+- bitTorrent
+#### Utilities
+- Unikey
+- Notepad ++
+- CCleaner
+- Microsoft .NET framework 4.8
+- 7zip
+- WinRAR
