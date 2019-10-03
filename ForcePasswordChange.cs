@@ -26,7 +26,7 @@ namespace LowEndViet.com_VPS_Tool
 
         private void txtNewPassword_TextChanged(object sender, EventArgs e)
         {
-            if(txtNewPassword.Text.Length >= 8 && Regex.Match(txtNewPassword.Text, @"\S*(\S*([a-zA-Z]\S*[0-9])|([0-9]\S*[a-zA-Z]))\S*").Success)
+            if (txtNewPassword.Text.Length >= 8 && (txtNewPassword.Text.Any(char.IsUpper) && txtNewPassword.Text.Any(char.IsLower) && txtNewPassword.Text.Any(char.IsDigit)))
             {
                 btnForceChangePassword.Enabled = true;
             }
@@ -50,7 +50,7 @@ namespace LowEndViet.com_VPS_Tool
 
         private void txtNewPassword_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter)
+            if (e.KeyCode == Keys.Enter && txtNewPassword.Text.Length >= 8 && (txtNewPassword.Text.Any(char.IsUpper) && txtNewPassword.Text.Any(char.IsLower) && txtNewPassword.Text.Any(char.IsDigit)))
             {
                 submitPassword();
             }

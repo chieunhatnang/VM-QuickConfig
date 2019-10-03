@@ -22,6 +22,7 @@ namespace LowEndViet.com_VPS_Tool
         #region Final variables
         static readonly string APPNAME = "VM QuickConfig";
         public readonly string VERSION = "1.2";
+        static readonly string GITNAME = "VM QuickConfig";
         static readonly string GITHOME = "https://github.com/chieunhatnang/VM-QuickConfig";
 
         static readonly string REGSTARTUP = "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run\\";
@@ -36,7 +37,6 @@ namespace LowEndViet.com_VPS_Tool
         public List<LevCheckbox> levCheckbox4WindowsList;
         public List<LevCheckbox> levCheckbox4Software;
 
-        IPConfig ipConfig = null;
         RegistryKey LEVStartupKey;
         RegistryKey LEVRegKey;
         #endregion
@@ -48,7 +48,7 @@ namespace LowEndViet.com_VPS_Tool
             this.MinimumSize = this.Size;
             this.Text = this.Text + " Version " + VERSION;
 
-            this.lnkGit.Text = GITHOME;
+            this.lnkGit.Text = GITNAME;
 
             initCheckbox();
             initRegistry();
@@ -275,6 +275,7 @@ namespace LowEndViet.com_VPS_Tool
         {
             System.Diagnostics.Process.Start(GITHOME);
         }
+
 
         private void form_LowEndVietFastVPSConfig_FormClosed(object sender, FormClosedEventArgs e)
         {
@@ -564,37 +565,6 @@ namespace LowEndViet.com_VPS_Tool
         #endregion Private functions
 
         #region Inner classes
-        class IPConfig
-        {
-            public string ip { get; set; }
-            public string netmask { get; set; }
-            public string gateway { get; set; }
-            public DNSConfig dns { get; set; }
-
-            public IPConfig(string filePath)
-            {
-                string fileContent = File.ReadAllText(filePath);
-                string[] lines = fileContent.Split(Environment.NewLine.ToCharArray());
-                this.ip = lines[0];
-                this.netmask = lines[1];
-                this.gateway = lines[2];
-                if (lines.Length > 3)
-                {
-                    this.dns = new DNSConfig("Custom DNS", lines[3]);
-                }
-                else
-                {
-                    this.dns = new DNSConfig("Google DNS", "8.8.8.8");
-                }
-            }
-            public IPConfig()
-            {
-                this.ip = "";
-                this.netmask = "";
-                this.gateway = "";
-                this.dns = new DNSConfig("Google DNS", "8.8.8.8");
-            }
-        }
 
         public class DNSConfig
         {

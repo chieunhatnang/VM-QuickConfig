@@ -69,20 +69,31 @@
             this.chkDisableUAC = new System.Windows.Forms.CheckBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.btnInstall = new System.Windows.Forms.Button();
-            this.chkNET48 = new System.Windows.Forms.CheckBox();
-            this.chkCcleaner = new System.Windows.Forms.CheckBox();
-            this.chkNotepad = new System.Windows.Forms.CheckBox();
-            this.chkIDMSilient = new System.Windows.Forms.CheckBox();
-            this.chkUnikey = new System.Windows.Forms.CheckBox();
+            this.chkPutty = new System.Windows.Forms.CheckBox();
             this.chkBitvise = new System.Windows.Forms.CheckBox();
             this.chkProxifier = new System.Windows.Forms.CheckBox();
-            this.chk7zip = new System.Windows.Forms.CheckBox();
-            this.chkOpera = new System.Windows.Forms.CheckBox();
-            this.chkCoccoc = new System.Windows.Forms.CheckBox();
             this.chkFirefox = new System.Windows.Forms.CheckBox();
             this.chkChrome = new System.Windows.Forms.CheckBox();
+            this.groupBox8 = new System.Windows.Forms.GroupBox();
             this.txtFirefoxVer = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
+            this.chkTor = new System.Windows.Forms.CheckBox();
+            this.chkBrave = new System.Windows.Forms.CheckBox();
+            this.chkOpera = new System.Windows.Forms.CheckBox();
+            this.chkCoccoc = new System.Windows.Forms.CheckBox();
+            this.groupBox10 = new System.Windows.Forms.GroupBox();
+            this.chkBitTorrent = new System.Windows.Forms.CheckBox();
+            this.chkUTorrent = new System.Windows.Forms.CheckBox();
+            this.chk4K = new System.Windows.Forms.CheckBox();
+            this.chkIDMSilient = new System.Windows.Forms.CheckBox();
+            this.groupBox9 = new System.Windows.Forms.GroupBox();
+            this.groupBox11 = new System.Windows.Forms.GroupBox();
+            this.chkUnikey = new System.Windows.Forms.CheckBox();
+            this.chkNET48 = new System.Windows.Forms.CheckBox();
+            this.chkNotepad = new System.Windows.Forms.CheckBox();
+            this.chkCcleaner = new System.Windows.Forms.CheckBox();
+            this.chkWinRAR = new System.Windows.Forms.CheckBox();
+            this.chk7zip = new System.Windows.Forms.CheckBox();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.lnkGit = new System.Windows.Forms.LinkLabel();
             this.lblGeneralInfo = new System.Windows.Forms.Label();
@@ -97,27 +108,16 @@
             this.label10 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.ttAutologin = new System.Windows.Forms.ToolTip(this.components);
-            this.groupBox8 = new System.Windows.Forms.GroupBox();
-            this.chkBrave = new System.Windows.Forms.CheckBox();
-            this.chkTor = new System.Windows.Forms.CheckBox();
-            this.chkPutty = new System.Windows.Forms.CheckBox();
-            this.groupBox9 = new System.Windows.Forms.GroupBox();
-            this.groupBox10 = new System.Windows.Forms.GroupBox();
-            this.chk4K = new System.Windows.Forms.CheckBox();
-            this.chkUTorrent = new System.Windows.Forms.CheckBox();
-            this.chkBitTorrent = new System.Windows.Forms.CheckBox();
-            this.groupBox11 = new System.Windows.Forms.GroupBox();
-            this.chkWinRAR = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox5.SuspendLayout();
-            this.groupBox6.SuspendLayout();
-            this.groupBox7.SuspendLayout();
             this.groupBox8.SuspendLayout();
             this.groupBox10.SuspendLayout();
             this.groupBox11.SuspendLayout();
+            this.groupBox6.SuspendLayout();
+            this.groupBox7.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -548,55 +548,15 @@
             this.btnInstall.UseVisualStyleBackColor = false;
             this.btnInstall.Click += new System.EventHandler(this.btnInstall_Click);
             // 
-            // chkNET48
+            // chkPutty
             // 
-            this.chkNET48.AutoSize = true;
-            this.chkNET48.Location = new System.Drawing.Point(4, 79);
-            this.chkNET48.Name = "chkNET48";
-            this.chkNET48.Size = new System.Drawing.Size(69, 17);
-            this.chkNET48.TabIndex = 10;
-            this.chkNET48.Text = ".NET 4.8";
-            this.chkNET48.UseVisualStyleBackColor = true;
-            // 
-            // chkCcleaner
-            // 
-            this.chkCcleaner.AutoSize = true;
-            this.chkCcleaner.Location = new System.Drawing.Point(4, 55);
-            this.chkCcleaner.Name = "chkCcleaner";
-            this.chkCcleaner.Size = new System.Drawing.Size(68, 17);
-            this.chkCcleaner.TabIndex = 8;
-            this.chkCcleaner.Text = "Ccleaner";
-            this.chkCcleaner.UseVisualStyleBackColor = true;
-            // 
-            // chkNotepad
-            // 
-            this.chkNotepad.AutoSize = true;
-            this.chkNotepad.Location = new System.Drawing.Point(4, 30);
-            this.chkNotepad.Name = "chkNotepad";
-            this.chkNotepad.Size = new System.Drawing.Size(79, 17);
-            this.chkNotepad.TabIndex = 6;
-            this.chkNotepad.Text = "Notepad++";
-            this.chkNotepad.UseVisualStyleBackColor = true;
-            // 
-            // chkIDMSilient
-            // 
-            this.chkIDMSilient.AutoSize = true;
-            this.chkIDMSilient.Location = new System.Drawing.Point(3, 11);
-            this.chkIDMSilient.Name = "chkIDMSilient";
-            this.chkIDMSilient.Size = new System.Drawing.Size(75, 17);
-            this.chkIDMSilient.TabIndex = 4;
-            this.chkIDMSilient.Text = "IDM Silent";
-            this.chkIDMSilient.UseVisualStyleBackColor = true;
-            // 
-            // chkUnikey
-            // 
-            this.chkUnikey.AutoSize = true;
-            this.chkUnikey.Location = new System.Drawing.Point(4, 8);
-            this.chkUnikey.Name = "chkUnikey";
-            this.chkUnikey.Size = new System.Drawing.Size(59, 17);
-            this.chkUnikey.TabIndex = 1;
-            this.chkUnikey.Text = "Unikey";
-            this.chkUnikey.UseVisualStyleBackColor = true;
+            this.chkPutty.AutoSize = true;
+            this.chkPutty.Location = new System.Drawing.Point(103, 63);
+            this.chkPutty.Name = "chkPutty";
+            this.chkPutty.Size = new System.Drawing.Size(50, 17);
+            this.chkPutty.TabIndex = 13;
+            this.chkPutty.Text = "Putty";
+            this.chkPutty.UseVisualStyleBackColor = true;
             // 
             // chkBitvise
             // 
@@ -618,15 +578,78 @@
             this.chkProxifier.Text = "Proxifier";
             this.chkProxifier.UseVisualStyleBackColor = true;
             // 
-            // chk7zip
+            // chkFirefox
             // 
-            this.chk7zip.AutoSize = true;
-            this.chk7zip.Location = new System.Drawing.Point(4, 101);
-            this.chk7zip.Name = "chk7zip";
-            this.chk7zip.Size = new System.Drawing.Size(45, 17);
-            this.chk7zip.TabIndex = 9;
-            this.chk7zip.Text = "7zip";
-            this.chk7zip.UseVisualStyleBackColor = true;
+            this.chkFirefox.AutoSize = true;
+            this.chkFirefox.Location = new System.Drawing.Point(7, 41);
+            this.chkFirefox.Name = "chkFirefox";
+            this.chkFirefox.Size = new System.Drawing.Size(57, 17);
+            this.chkFirefox.TabIndex = 2;
+            this.chkFirefox.Text = "Firefox";
+            this.chkFirefox.UseVisualStyleBackColor = true;
+            // 
+            // chkChrome
+            // 
+            this.chkChrome.AutoSize = true;
+            this.chkChrome.Location = new System.Drawing.Point(7, 19);
+            this.chkChrome.Name = "chkChrome";
+            this.chkChrome.Size = new System.Drawing.Size(62, 17);
+            this.chkChrome.TabIndex = 0;
+            this.chkChrome.Text = "Chrome";
+            this.chkChrome.UseVisualStyleBackColor = true;
+            // 
+            // groupBox8
+            // 
+            this.groupBox8.Controls.Add(this.txtFirefoxVer);
+            this.groupBox8.Controls.Add(this.label6);
+            this.groupBox8.Controls.Add(this.chkTor);
+            this.groupBox8.Controls.Add(this.chkBrave);
+            this.groupBox8.Controls.Add(this.chkOpera);
+            this.groupBox8.Controls.Add(this.chkCoccoc);
+            this.groupBox8.Location = new System.Drawing.Point(3, 11);
+            this.groupBox8.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
+            this.groupBox8.Name = "groupBox8";
+            this.groupBox8.Padding = new System.Windows.Forms.Padding(3, 1, 3, 1);
+            this.groupBox8.Size = new System.Drawing.Size(95, 170);
+            this.groupBox8.TabIndex = 15;
+            this.groupBox8.TabStop = false;
+            // 
+            // txtFirefoxVer
+            // 
+            this.txtFirefoxVer.Location = new System.Drawing.Point(43, 50);
+            this.txtFirefoxVer.Name = "txtFirefoxVer";
+            this.txtFirefoxVer.Size = new System.Drawing.Size(45, 20);
+            this.txtFirefoxVer.TabIndex = 3;
+            this.txtFirefoxVer.Text = "Latest";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(20, 53);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(26, 13);
+            this.label6.TabIndex = 2;
+            this.label6.Text = "Ver.";
+            // 
+            // chkTor
+            // 
+            this.chkTor.AutoSize = true;
+            this.chkTor.Location = new System.Drawing.Point(7, 144);
+            this.chkTor.Name = "chkTor";
+            this.chkTor.Size = new System.Drawing.Size(82, 17);
+            this.chkTor.TabIndex = 7;
+            this.chkTor.Text = "Tor browser";
+            this.chkTor.UseVisualStyleBackColor = true;
+            // 
+            // chkBrave
+            // 
+            this.chkBrave.AutoSize = true;
+            this.chkBrave.Location = new System.Drawing.Point(7, 122);
+            this.chkBrave.Name = "chkBrave";
+            this.chkBrave.Size = new System.Drawing.Size(94, 17);
+            this.chkBrave.TabIndex = 7;
+            this.chkBrave.Text = "Brave browser";
+            this.chkBrave.UseVisualStyleBackColor = true;
             // 
             // chkOpera
             // 
@@ -648,42 +671,145 @@
             this.chkCoccoc.Text = "Cốc Cốc";
             this.chkCoccoc.UseVisualStyleBackColor = true;
             // 
-            // chkFirefox
+            // groupBox10
             // 
-            this.chkFirefox.AutoSize = true;
-            this.chkFirefox.Location = new System.Drawing.Point(7, 41);
-            this.chkFirefox.Name = "chkFirefox";
-            this.chkFirefox.Size = new System.Drawing.Size(57, 17);
-            this.chkFirefox.TabIndex = 2;
-            this.chkFirefox.Text = "Firefox";
-            this.chkFirefox.UseVisualStyleBackColor = true;
+            this.groupBox10.Controls.Add(this.chkBitTorrent);
+            this.groupBox10.Controls.Add(this.chkUTorrent);
+            this.groupBox10.Controls.Add(this.chk4K);
+            this.groupBox10.Controls.Add(this.chkIDMSilient);
+            this.groupBox10.Location = new System.Drawing.Point(100, 79);
+            this.groupBox10.Margin = new System.Windows.Forms.Padding(1);
+            this.groupBox10.Name = "groupBox10";
+            this.groupBox10.Padding = new System.Windows.Forms.Padding(1);
+            this.groupBox10.Size = new System.Drawing.Size(99, 102);
+            this.groupBox10.TabIndex = 16;
+            this.groupBox10.TabStop = false;
             // 
-            // chkChrome
+            // chkBitTorrent
             // 
-            this.chkChrome.AutoSize = true;
-            this.chkChrome.Location = new System.Drawing.Point(7, 19);
-            this.chkChrome.Name = "chkChrome";
-            this.chkChrome.Size = new System.Drawing.Size(62, 17);
-            this.chkChrome.TabIndex = 0;
-            this.chkChrome.Text = "Chrome";
-            this.chkChrome.UseVisualStyleBackColor = true;
+            this.chkBitTorrent.AutoSize = true;
+            this.chkBitTorrent.Location = new System.Drawing.Point(3, 76);
+            this.chkBitTorrent.Name = "chkBitTorrent";
+            this.chkBitTorrent.Size = new System.Drawing.Size(71, 17);
+            this.chkBitTorrent.TabIndex = 4;
+            this.chkBitTorrent.Text = "bitTorrent";
+            this.chkBitTorrent.UseVisualStyleBackColor = true;
             // 
-            // txtFirefoxVer
+            // chkUTorrent
             // 
-            this.txtFirefoxVer.Location = new System.Drawing.Point(43, 50);
-            this.txtFirefoxVer.Name = "txtFirefoxVer";
-            this.txtFirefoxVer.Size = new System.Drawing.Size(45, 20);
-            this.txtFirefoxVer.TabIndex = 3;
-            this.txtFirefoxVer.Text = "Latest";
+            this.chkUTorrent.AutoSize = true;
+            this.chkUTorrent.Location = new System.Drawing.Point(3, 54);
+            this.chkUTorrent.Name = "chkUTorrent";
+            this.chkUTorrent.Size = new System.Drawing.Size(66, 17);
+            this.chkUTorrent.TabIndex = 4;
+            this.chkUTorrent.Text = "uTorrent";
+            this.chkUTorrent.UseVisualStyleBackColor = true;
             // 
-            // label6
+            // chk4K
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(20, 53);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(26, 13);
-            this.label6.TabIndex = 2;
-            this.label6.Text = "Ver.";
+            this.chk4K.AutoSize = true;
+            this.chk4K.Location = new System.Drawing.Point(3, 32);
+            this.chk4K.Name = "chk4K";
+            this.chk4K.Size = new System.Drawing.Size(99, 17);
+            this.chk4K.TabIndex = 4;
+            this.chk4K.Text = "4K Downloader";
+            this.chk4K.UseVisualStyleBackColor = true;
+            // 
+            // chkIDMSilient
+            // 
+            this.chkIDMSilient.AutoSize = true;
+            this.chkIDMSilient.Location = new System.Drawing.Point(3, 11);
+            this.chkIDMSilient.Name = "chkIDMSilient";
+            this.chkIDMSilient.Size = new System.Drawing.Size(75, 17);
+            this.chkIDMSilient.TabIndex = 4;
+            this.chkIDMSilient.Text = "IDM Silent";
+            this.chkIDMSilient.UseVisualStyleBackColor = true;
+            // 
+            // groupBox9
+            // 
+            this.groupBox9.Location = new System.Drawing.Point(99, 11);
+            this.groupBox9.Margin = new System.Windows.Forms.Padding(1);
+            this.groupBox9.Name = "groupBox9";
+            this.groupBox9.Padding = new System.Windows.Forms.Padding(1);
+            this.groupBox9.Size = new System.Drawing.Size(99, 72);
+            this.groupBox9.TabIndex = 16;
+            this.groupBox9.TabStop = false;
+            // 
+            // groupBox11
+            // 
+            this.groupBox11.Controls.Add(this.chkUnikey);
+            this.groupBox11.Controls.Add(this.chkNET48);
+            this.groupBox11.Controls.Add(this.chkNotepad);
+            this.groupBox11.Controls.Add(this.chkCcleaner);
+            this.groupBox11.Controls.Add(this.chkWinRAR);
+            this.groupBox11.Controls.Add(this.chk7zip);
+            this.groupBox11.Location = new System.Drawing.Point(202, 11);
+            this.groupBox11.Margin = new System.Windows.Forms.Padding(1);
+            this.groupBox11.Name = "groupBox11";
+            this.groupBox11.Padding = new System.Windows.Forms.Padding(1);
+            this.groupBox11.Size = new System.Drawing.Size(91, 170);
+            this.groupBox11.TabIndex = 17;
+            this.groupBox11.TabStop = false;
+            // 
+            // chkUnikey
+            // 
+            this.chkUnikey.AutoSize = true;
+            this.chkUnikey.Location = new System.Drawing.Point(4, 8);
+            this.chkUnikey.Name = "chkUnikey";
+            this.chkUnikey.Size = new System.Drawing.Size(59, 17);
+            this.chkUnikey.TabIndex = 1;
+            this.chkUnikey.Text = "Unikey";
+            this.chkUnikey.UseVisualStyleBackColor = true;
+            // 
+            // chkNET48
+            // 
+            this.chkNET48.AutoSize = true;
+            this.chkNET48.Location = new System.Drawing.Point(4, 79);
+            this.chkNET48.Name = "chkNET48";
+            this.chkNET48.Size = new System.Drawing.Size(69, 17);
+            this.chkNET48.TabIndex = 10;
+            this.chkNET48.Text = ".NET 4.8";
+            this.chkNET48.UseVisualStyleBackColor = true;
+            // 
+            // chkNotepad
+            // 
+            this.chkNotepad.AutoSize = true;
+            this.chkNotepad.Location = new System.Drawing.Point(4, 30);
+            this.chkNotepad.Name = "chkNotepad";
+            this.chkNotepad.Size = new System.Drawing.Size(79, 17);
+            this.chkNotepad.TabIndex = 6;
+            this.chkNotepad.Text = "Notepad++";
+            this.chkNotepad.UseVisualStyleBackColor = true;
+            // 
+            // chkCcleaner
+            // 
+            this.chkCcleaner.AutoSize = true;
+            this.chkCcleaner.Location = new System.Drawing.Point(4, 55);
+            this.chkCcleaner.Name = "chkCcleaner";
+            this.chkCcleaner.Size = new System.Drawing.Size(68, 17);
+            this.chkCcleaner.TabIndex = 8;
+            this.chkCcleaner.Text = "Ccleaner";
+            this.chkCcleaner.UseVisualStyleBackColor = true;
+            // 
+            // chkWinRAR
+            // 
+            this.chkWinRAR.AutoSize = true;
+            this.chkWinRAR.Location = new System.Drawing.Point(4, 124);
+            this.chkWinRAR.Name = "chkWinRAR";
+            this.chkWinRAR.Size = new System.Drawing.Size(68, 17);
+            this.chkWinRAR.TabIndex = 9;
+            this.chkWinRAR.Text = "WinRAR";
+            this.chkWinRAR.UseVisualStyleBackColor = true;
+            // 
+            // chk7zip
+            // 
+            this.chk7zip.AutoSize = true;
+            this.chk7zip.Location = new System.Drawing.Point(4, 101);
+            this.chk7zip.Name = "chk7zip";
+            this.chk7zip.Size = new System.Drawing.Size(45, 17);
+            this.chk7zip.TabIndex = 9;
+            this.chk7zip.Text = "7zip";
+            this.chk7zip.UseVisualStyleBackColor = true;
             // 
             // groupBox6
             // 
@@ -708,6 +834,7 @@
             this.lnkGit.TabIndex = 4;
             this.lnkGit.TabStop = true;
             this.lnkGit.Text = "linkLabel1";
+            this.lnkGit.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkGit_LinkClicked);
             // 
             // lblGeneralInfo
             // 
@@ -823,132 +950,6 @@
             // 
             this.ttAutologin.AutomaticDelay = 50;
             // 
-            // groupBox8
-            // 
-            this.groupBox8.Controls.Add(this.txtFirefoxVer);
-            this.groupBox8.Controls.Add(this.label6);
-            this.groupBox8.Controls.Add(this.chkTor);
-            this.groupBox8.Controls.Add(this.chkBrave);
-            this.groupBox8.Controls.Add(this.chkOpera);
-            this.groupBox8.Controls.Add(this.chkCoccoc);
-            this.groupBox8.Location = new System.Drawing.Point(3, 11);
-            this.groupBox8.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
-            this.groupBox8.Name = "groupBox8";
-            this.groupBox8.Padding = new System.Windows.Forms.Padding(3, 1, 3, 1);
-            this.groupBox8.Size = new System.Drawing.Size(95, 170);
-            this.groupBox8.TabIndex = 15;
-            this.groupBox8.TabStop = false;
-            // 
-            // chkBrave
-            // 
-            this.chkBrave.AutoSize = true;
-            this.chkBrave.Location = new System.Drawing.Point(7, 122);
-            this.chkBrave.Name = "chkBrave";
-            this.chkBrave.Size = new System.Drawing.Size(94, 17);
-            this.chkBrave.TabIndex = 7;
-            this.chkBrave.Text = "Brave browser";
-            this.chkBrave.UseVisualStyleBackColor = true;
-            // 
-            // chkTor
-            // 
-            this.chkTor.AutoSize = true;
-            this.chkTor.Location = new System.Drawing.Point(7, 144);
-            this.chkTor.Name = "chkTor";
-            this.chkTor.Size = new System.Drawing.Size(82, 17);
-            this.chkTor.TabIndex = 7;
-            this.chkTor.Text = "Tor browser";
-            this.chkTor.UseVisualStyleBackColor = true;
-            // 
-            // chkPutty
-            // 
-            this.chkPutty.AutoSize = true;
-            this.chkPutty.Location = new System.Drawing.Point(103, 63);
-            this.chkPutty.Name = "chkPutty";
-            this.chkPutty.Size = new System.Drawing.Size(50, 17);
-            this.chkPutty.TabIndex = 13;
-            this.chkPutty.Text = "Putty";
-            this.chkPutty.UseVisualStyleBackColor = true;
-            // 
-            // groupBox9
-            // 
-            this.groupBox9.Location = new System.Drawing.Point(99, 11);
-            this.groupBox9.Margin = new System.Windows.Forms.Padding(1);
-            this.groupBox9.Name = "groupBox9";
-            this.groupBox9.Padding = new System.Windows.Forms.Padding(1);
-            this.groupBox9.Size = new System.Drawing.Size(99, 72);
-            this.groupBox9.TabIndex = 16;
-            this.groupBox9.TabStop = false;
-            // 
-            // groupBox10
-            // 
-            this.groupBox10.Controls.Add(this.chkBitTorrent);
-            this.groupBox10.Controls.Add(this.chkUTorrent);
-            this.groupBox10.Controls.Add(this.chk4K);
-            this.groupBox10.Controls.Add(this.chkIDMSilient);
-            this.groupBox10.Location = new System.Drawing.Point(100, 79);
-            this.groupBox10.Margin = new System.Windows.Forms.Padding(1);
-            this.groupBox10.Name = "groupBox10";
-            this.groupBox10.Padding = new System.Windows.Forms.Padding(1);
-            this.groupBox10.Size = new System.Drawing.Size(99, 102);
-            this.groupBox10.TabIndex = 16;
-            this.groupBox10.TabStop = false;
-            // 
-            // chk4K
-            // 
-            this.chk4K.AutoSize = true;
-            this.chk4K.Location = new System.Drawing.Point(3, 32);
-            this.chk4K.Name = "chk4K";
-            this.chk4K.Size = new System.Drawing.Size(99, 17);
-            this.chk4K.TabIndex = 4;
-            this.chk4K.Text = "4K Downloader";
-            this.chk4K.UseVisualStyleBackColor = true;
-            // 
-            // chkUTorrent
-            // 
-            this.chkUTorrent.AutoSize = true;
-            this.chkUTorrent.Location = new System.Drawing.Point(3, 54);
-            this.chkUTorrent.Name = "chkUTorrent";
-            this.chkUTorrent.Size = new System.Drawing.Size(66, 17);
-            this.chkUTorrent.TabIndex = 4;
-            this.chkUTorrent.Text = "uTorrent";
-            this.chkUTorrent.UseVisualStyleBackColor = true;
-            // 
-            // chkBitTorrent
-            // 
-            this.chkBitTorrent.AutoSize = true;
-            this.chkBitTorrent.Location = new System.Drawing.Point(3, 76);
-            this.chkBitTorrent.Name = "chkBitTorrent";
-            this.chkBitTorrent.Size = new System.Drawing.Size(71, 17);
-            this.chkBitTorrent.TabIndex = 4;
-            this.chkBitTorrent.Text = "bitTorrent";
-            this.chkBitTorrent.UseVisualStyleBackColor = true;
-            // 
-            // groupBox11
-            // 
-            this.groupBox11.Controls.Add(this.chkUnikey);
-            this.groupBox11.Controls.Add(this.chkNET48);
-            this.groupBox11.Controls.Add(this.chkNotepad);
-            this.groupBox11.Controls.Add(this.chkCcleaner);
-            this.groupBox11.Controls.Add(this.chkWinRAR);
-            this.groupBox11.Controls.Add(this.chk7zip);
-            this.groupBox11.Location = new System.Drawing.Point(202, 11);
-            this.groupBox11.Margin = new System.Windows.Forms.Padding(1);
-            this.groupBox11.Name = "groupBox11";
-            this.groupBox11.Padding = new System.Windows.Forms.Padding(1);
-            this.groupBox11.Size = new System.Drawing.Size(91, 170);
-            this.groupBox11.TabIndex = 17;
-            this.groupBox11.TabStop = false;
-            // 
-            // chkWinRAR
-            // 
-            this.chkWinRAR.AutoSize = true;
-            this.chkWinRAR.Location = new System.Drawing.Point(4, 124);
-            this.chkWinRAR.Name = "chkWinRAR";
-            this.chkWinRAR.Size = new System.Drawing.Size(68, 17);
-            this.chkWinRAR.TabIndex = 9;
-            this.chkWinRAR.Text = "WinRAR";
-            this.chkWinRAR.UseVisualStyleBackColor = true;
-            // 
             // form_LowEndVietFastVPSConfig
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -976,16 +977,16 @@
             this.groupBox4.PerformLayout();
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
-            this.groupBox6.ResumeLayout(false);
-            this.groupBox6.PerformLayout();
-            this.groupBox7.ResumeLayout(false);
-            this.groupBox7.PerformLayout();
             this.groupBox8.ResumeLayout(false);
             this.groupBox8.PerformLayout();
             this.groupBox10.ResumeLayout(false);
             this.groupBox10.PerformLayout();
             this.groupBox11.ResumeLayout(false);
             this.groupBox11.PerformLayout();
+            this.groupBox6.ResumeLayout(false);
+            this.groupBox6.PerformLayout();
+            this.groupBox7.ResumeLayout(false);
+            this.groupBox7.PerformLayout();
             this.ResumeLayout(false);
 
         }
