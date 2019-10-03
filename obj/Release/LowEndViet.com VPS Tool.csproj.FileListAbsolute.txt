@@ -1,0 +1,13 @@
+L:\Projects\LowEndViet.com VPS Tool\LowEndViet.com VPS Tool\obj\Release\LowEndViet.com_VPS_Tool.form_LowEndVietFastVPSConfig.resources
+L:\Projects\LowEndViet.com VPS Tool\LowEndViet.com VPS Tool\obj\Release\LowEndViet.com_VPS_Tool.Properties.Resources.resources
+L:\Projects\LowEndViet.com VPS Tool\LowEndViet.com VPS Tool\obj\Release\LowEndViet.com_VPS_Tool.StatusForm.resources
+L:\Projects\LowEndViet.com VPS Tool\LowEndViet.com VPS Tool\obj\Release\LowEndViet.com VPS Tool.csproj.GenerateResource.Cache
+L:\Projects\LowEndViet.com VPS Tool\LowEndViet.com VPS Tool\obj\Release\LowEndViet.com VPS Tool.csprojResolveAssemblyReference.cache
+L:\Projects\LowEndViet.com VPS Tool\LowEndViet.com VPS Tool\obj\Release\LowEndViet.com_VPS_Tool.AutoLoginPasswordForm.resources
+L:\Projects\LowEndViet.com VPS Tool\LowEndViet.com VPS Tool\obj\Release\LowEndViet.com_VPS_Tool.ForcePasswordChange.resources
+L:\Projects\LowEndViet.com VPS Tool\LowEndViet.com VPS Tool\bin\Release\LowEndViet.com FastVPSConfig.exe.config
+L:\Projects\LowEndViet.com VPS Tool\LowEndViet.com VPS Tool\bin\Release\LowEndViet.com FastVPSConfig.exe
+L:\Projects\LowEndViet.com VPS Tool\LowEndViet.com VPS Tool\bin\Release\LowEndViet.com FastVPSConfig.pdb
+L:\Projects\LowEndViet.com VPS Tool\LowEndViet.com VPS Tool\obj\Release\LowEndViet.com FastVPSConfig.exe
+L:\Projects\LowEndViet.com VPS Tool\LowEndViet.com VPS Tool\obj\Release\LowEndViet.com FastVPSConfig.pdb
+L:\Projects\LowEndViet.com VPS Tool\LowEndViet.com VPS Tool\bin\Release\VM QuickConfig.exe.config

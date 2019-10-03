@@ -1,0 +1,17 @@
+<project outputDir="L:\Projects\LowEndViet.com VPS Tool\LowEndViet.com VPS Tool\bin\Release\Confused" baseDir="L:\Projects\LowEndViet.com VPS Tool\LowEndViet.com VPS Tool\bin\Release" xmlns="http://confuser.codeplex.com">
+  <packer id="compressor" />
+  <module path="LowEndViet.com VPS Tool.exe">
+    <rule pattern="true" preset="maximum">
+      <protection id="anti ildasm" />
+      <protection id="anti tamper" />
+      <protection id="constants" />
+      <protection id="ctrl flow" />
+      <protection id="anti dump" />
+      <protection id="anti debug" />
+      <protection id="invalid metadata" />
+      <protection id="ref proxy" />
+      <protection id="resources" />
+      <protection id="rename" />
+    </rule>
+  </module>
+</project>
