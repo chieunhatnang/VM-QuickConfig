@@ -25,9 +25,11 @@ namespace LowEndViet.com_VPS_Tool
         static readonly string GITNAME = "VM QuickConfig";
         static readonly string GITHOME = "https://github.com/chieunhatnang/VM-QuickConfig";
 
-        static readonly string REGSTARTUP = "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run\\";
-        static readonly string REGLEV = "Software\\LEV\\VMQuickConfig";
-        static readonly string DISKPARTCONFIGPATH = "C:\\Users\\Public\\LEV\\diskpartconfig.txt";
+        static readonly string REG_STARTUP = "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run\\";
+        static readonly string REG_LEV = "Software\\LEV\\VMQuickConfig";
+        static readonly string LEV_DIR = "C:\\Users\\Public\\LEV\\";
+        static readonly string DISKPART_CONFIG_PATH = LEV_DIR + "diskpartconfig.txt";
+        static readonly string NETWORK_CONFIG_PATH = LEV_DIR + "networkconfig.txt";
 
         #endregion
 
@@ -49,9 +51,13 @@ namespace LowEndViet.com_VPS_Tool
             this.Text = this.Text + " Version " + VERSION;
 
             this.lnkGit.Text = GITNAME;
+            //Set the tooltip
+            ttAutologin.SetToolTip(label8, "If you check this box, your VPS will be automatically login when it is started.\r\n" +
+                "It allows you to reset your password over Web console in case you forget the password.");
 
             initCheckbox();
             initRegistry();
+            initLEVDir();
 
             // Initialize combobox
             foreach (DNSConfig dnsConfig in DNSServerList)
@@ -60,10 +66,22 @@ namespace LowEndViet.com_VPS_Tool
             }
             cmbDNS.DropDownWidth = 200;
 
-            //Set the tooltip
-            ttAutologin.SetToolTip(label8, "If you check this box, your VPS will be automatically login when it is started.\r\n" +
-                "It allows you to reset your password over Web console in case you forget the password.");
-        
+            if (File.Exists(NETWORK_CONFIG_PATH))
+            {
+                loadNetworkConfigFile(NETWORK_CONFIG_PATH);
+            }
+            else
+            {
+                foreach (DriveInfo drive in DriveInfo.GetDrives().Where(d => d.DriveType == DriveType.CDRom))
+                    if (drive.IsReady)
+                    {
+                        string configOnCD = drive.RootDirectory.ToString() + "config.txt";
+                        if (File.Exists(configOnCD))
+                        {
+                            loadNetworkConfigFile(configOnCD);
+                        }
+                    }
+            }        
         }
 
         #region Event Processing
@@ -110,6 +128,18 @@ namespace LowEndViet.com_VPS_Tool
             if (rdStatic.Checked)
             {
                 setStaticIP(txtIP.Text, txtNetmask.Text, txtGateway.Text, txtCustomDNS.Text);
+                string config = txtIP.Text  + Environment.NewLine
+                                            + txtNetmask.Text + Environment.NewLine
+                                            + txtGateway.Text + Environment.NewLine
+                                            + txtCustomDNS.Text + Environment.NewLine;
+                try
+                {
+                    File.WriteAllText(NETWORK_CONFIG_PATH, config);
+                }
+                catch
+                {
+                    // Fail silently
+                }
             }
             if (rdDHCP.Checked)
             {
@@ -368,14 +398,14 @@ namespace LowEndViet.com_VPS_Tool
 
         private void initRegistry ()
         {
-            LEVStartupKey = Registry.LocalMachine.OpenSubKey(REGSTARTUP, true);
-            LEVRegKey = Registry.CurrentUser.OpenSubKey(REGLEV, true);
+            LEVStartupKey = Registry.LocalMachine.OpenSubKey(REG_STARTUP, true);
+            LEVRegKey = Registry.CurrentUser.OpenSubKey(REG_LEV, true);
 
             // First time start
             if (LEVRegKey == null || LEVRegKey.GetValue("ForceChangePassword") == null ||
                 LEVRegKey.GetValue("AutoUpdate") == null || LEVRegKey.GetValue("Version") == null)
             {
-                LEVRegKey = Registry.CurrentUser.CreateSubKey(REGLEV);
+                LEVRegKey = Registry.CurrentUser.CreateSubKey(REG_LEV);
                 LEVRegKey.SetValue("ForceChangePassword", "0"); // Default not require changing password
                 LEVRegKey.SetValue("AutoUpdate", "1"); // Default auto update
                 LEVStartupKey.SetValue(APPNAME, Application.ExecutablePath); // Default autostart
@@ -396,6 +426,54 @@ namespace LowEndViet.com_VPS_Tool
             if (LEVStartupKey.GetValue(APPNAME) != null)
             {
                 this.chkStartUp.Checked = true;
+            }
+        }
+
+        private void initLEVDir()
+        {
+            try
+            {
+                // If the directory doesn't exist, create it.
+                if (!Directory.Exists(LEV_DIR))
+                {
+                    Directory.CreateDirectory(LEV_DIR);
+                }
+            }
+            catch (Exception)
+            {
+                // Fail silently
+            }
+        }
+
+        private void loadNetworkConfigFile(string filePath)
+        {
+            try
+            {
+                string fileContent = File.ReadAllText(filePath);
+                fileContent = fileContent.TrimEnd('\r', '\n');
+
+                RegexOptions options = RegexOptions.None;
+                Regex regex = new Regex("[\r, \n]{1,}", options);
+                fileContent = regex.Replace(fileContent, "|");
+
+                string[] lines = fileContent.Split('|');
+
+                txtIP.Text = lines[0];
+                txtNetmask.Text = lines[1];
+                txtGateway.Text = lines[2];
+                if (lines.Length > 3)
+                {
+                    cmbDNS.SelectedIndex = 3;
+                    txtCustomDNS.Text = lines[3];
+                }
+                else
+                {
+                    cmbDNS.SelectedIndex = 0;
+                }
+            }
+            catch
+            {
+                // Fail silently
             }
         }
 
@@ -534,9 +612,9 @@ namespace LowEndViet.com_VPS_Tool
                     + "SELECT PARTITION 2" + Environment.NewLine
                     + "EXTEND" + Environment.NewLine
                     + "EXIT";
-            File.WriteAllText(DISKPARTCONFIGPATH, textScript);
-            executeCommand("diskpart.exe /s " + DISKPARTCONFIGPATH, true);
-            File.Delete(DISKPARTCONFIGPATH);
+            File.WriteAllText(DISKPART_CONFIG_PATH, textScript);
+            executeCommand("diskpart.exe /s " + DISKPART_CONFIG_PATH, true);
+            File.Delete(DISKPART_CONFIG_PATH);
         }
 
         private static int executeCommand(string commnd, bool sync = false, int timeout = 200000)
