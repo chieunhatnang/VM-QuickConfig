@@ -9,7 +9,9 @@ You will find almost every settings you need when you setup your VPS at the firs
 ### Network config: 
 - Static IP/DHCP
 - IP/Netmask/Gateway/DNS
-### Password tool
+### Security tool
+- You can change the default Windows Administrator account to a different account to make it more secure.
+- You can change the RDP port to other port other than 3389.
 - You can change the Windows password without knowing the old password. *_Note_*: The new password must be at least 8 characters and contains both UPPERCASE, lowercase and number.
 ### Disk extender tool
 - If you resize your disk of the VM on the host, Windows may not recognize the new extended part. This tool will help you extend the disk to full capacity.
