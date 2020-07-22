@@ -8,7 +8,7 @@
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>LowEndViet.com_VPS_Tool</RootNamespace>
-    <AssemblyName>VM QuickConfig</AssemblyName>
+    <AssemblyName>VMQuickConfig</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile>

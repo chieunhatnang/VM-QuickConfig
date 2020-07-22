@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -26,13 +27,15 @@ namespace LowEndViet.com_VPS_Tool
 
         private void txtNewPassword_TextChanged(object sender, EventArgs e)
         {
-            if (txtNewPassword.Text.Length >= 8 && (txtNewPassword.Text.Any(char.IsUpper) && txtNewPassword.Text.Any(char.IsLower) && txtNewPassword.Text.Any(char.IsDigit)))
+            if (isStrongPassword(txtNewPassword.Text))
             {
-                btnForceChangePassword.Enabled = true;
+                lblPasswordStrength.Text = "Good";
+                lblPasswordStrength.ForeColor = System.Drawing.Color.Green;
             }
             else
             {
-                btnForceChangePassword.Enabled = false;
+                lblPasswordStrength.Text = "Weak";
+                lblPasswordStrength.ForeColor = System.Drawing.Color.Red;
             }
         }
 
@@ -50,14 +53,41 @@ namespace LowEndViet.com_VPS_Tool
 
         private void txtNewPassword_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter && txtNewPassword.Text.Length >= 8 && (txtNewPassword.Text.Any(char.IsUpper) && txtNewPassword.Text.Any(char.IsLower) && txtNewPassword.Text.Any(char.IsDigit)))
+            if (e.KeyCode == Keys.Enter)
             {
                 submitPassword();
             }
         }
 
+        private Boolean isStrongPassword(string password)
+        {
+            string[] badPasswordList = null;
+            try
+            {
+                badPasswordList = File.ReadAllText("C:\\Users\\Public\\LEV\\bad_pw.txt").Split(',');
+            } catch
+            {
+
+            }
+            
+            if (password.Length >= 8 && (password.Any(char.IsUpper) && password.Any(char.IsLower) && password.Any(char.IsDigit))
+                && (badPasswordList == null || !badPasswordList.Contains(password)))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         private void submitPassword()
         {
+            if (!isStrongPassword(txtNewPassword.Text))
+            {
+                MessageBox.Show("Password must be:\r\n- More than 8 characters\r\n- Contains UPPER CASE leters (A-Z)\r\n- Contains lower case letter (a-z)\r\n- Contains number (0-9)");
+                return;
+            }
             this.newPassword = txtNewPassword.Text;
             this.DialogResult = DialogResult.OK;
             this.Close();

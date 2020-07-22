@@ -45,13 +45,19 @@
             this.txtIP = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label8 = new System.Windows.Forms.Label();
+            this.btnChangeAdminAcc = new System.Windows.Forms.Button();
+            this.btnChangeRDPPort = new System.Windows.Forms.Button();
+            this.txtAdminAcc = new System.Windows.Forms.TextBox();
             this.btnChangePassword = new System.Windows.Forms.Button();
+            this.txtRDPPort = new System.Windows.Forms.TextBox();
             this.chkAutoLogin = new System.Windows.Forms.CheckBox();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
             this.txtNewPassword = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.label11 = new System.Windows.Forms.Label();
             this.btnExtendDisk = new System.Windows.Forms.Button();
+            this.label11 = new System.Windows.Forms.Label();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.btnConfigWindows = new System.Windows.Forms.Button();
             this.chkCheckAll = new System.Windows.Forms.CheckBox();
@@ -108,6 +114,8 @@
             this.label10 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.ttAutologin = new System.Windows.Forms.ToolTip(this.components);
+            this.label100 = new System.Windows.Forms.Label();
+            this.lblCurrentRDPPort = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -136,7 +144,7 @@
             this.groupBox1.Controls.Add(this.txtIP);
             this.groupBox1.Location = new System.Drawing.Point(5, 1);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(299, 166);
+            this.groupBox1.Size = new System.Drawing.Size(299, 192);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Network config";
@@ -168,7 +176,7 @@
             // 
             this.bntConfigNetwork.BackColor = System.Drawing.Color.Transparent;
             this.bntConfigNetwork.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bntConfigNetwork.Location = new System.Drawing.Point(77, 137);
+            this.bntConfigNetwork.Location = new System.Drawing.Point(78, 152);
             this.bntConfigNetwork.Name = "bntConfigNetwork";
             this.bntConfigNetwork.Size = new System.Drawing.Size(140, 23);
             this.bntConfigNetwork.TabIndex = 7;
@@ -253,16 +261,24 @@
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.label8);
+            this.groupBox2.Controls.Add(this.btnChangeAdminAcc);
+            this.groupBox2.Controls.Add(this.btnChangeRDPPort);
+            this.groupBox2.Controls.Add(this.txtAdminAcc);
             this.groupBox2.Controls.Add(this.btnChangePassword);
+            this.groupBox2.Controls.Add(this.txtRDPPort);
             this.groupBox2.Controls.Add(this.chkAutoLogin);
+            this.groupBox2.Controls.Add(this.lblCurrentRDPPort);
+            this.groupBox2.Controls.Add(this.label100);
+            this.groupBox2.Controls.Add(this.label13);
+            this.groupBox2.Controls.Add(this.label14);
             this.groupBox2.Controls.Add(this.txtNewPassword);
             this.groupBox2.Controls.Add(this.label4);
             this.groupBox2.Location = new System.Drawing.Point(310, 0);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(299, 81);
+            this.groupBox2.Size = new System.Drawing.Size(299, 131);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Password";
+            this.groupBox2.Text = "Security";
             // 
             // label8
             // 
@@ -270,85 +286,145 @@
             this.label8.BackColor = System.Drawing.SystemColors.Control;
             this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label8.ForeColor = System.Drawing.Color.Red;
-            this.label8.Location = new System.Drawing.Point(273, 24);
+            this.label8.Location = new System.Drawing.Point(100, 109);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(19, 13);
+            this.label8.Size = new System.Drawing.Size(74, 13);
             this.label8.TabIndex = 16;
-            this.label8.Text = "(?)";
+            this.label8.Text = "(What is this?)";
+            // 
+            // btnChangeAdminAcc
+            // 
+            this.btnChangeAdminAcc.BackColor = System.Drawing.Color.Transparent;
+            this.btnChangeAdminAcc.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnChangeAdminAcc.Location = new System.Drawing.Point(228, 23);
+            this.btnChangeAdminAcc.Name = "btnChangeAdminAcc";
+            this.btnChangeAdminAcc.Size = new System.Drawing.Size(65, 23);
+            this.btnChangeAdminAcc.TabIndex = 1;
+            this.btnChangeAdminAcc.Text = "Change";
+            this.btnChangeAdminAcc.UseVisualStyleBackColor = false;
+            this.btnChangeAdminAcc.Click += new System.EventHandler(this.btnChangeAdminAcc_Click);
+            // 
+            // btnChangeRDPPort
+            // 
+            this.btnChangeRDPPort.BackColor = System.Drawing.Color.Transparent;
+            this.btnChangeRDPPort.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnChangeRDPPort.Location = new System.Drawing.Point(228, 82);
+            this.btnChangeRDPPort.Name = "btnChangeRDPPort";
+            this.btnChangeRDPPort.Size = new System.Drawing.Size(65, 23);
+            this.btnChangeRDPPort.TabIndex = 1;
+            this.btnChangeRDPPort.Text = "Change";
+            this.btnChangeRDPPort.UseVisualStyleBackColor = false;
+            this.btnChangeRDPPort.Click += new System.EventHandler(this.btnChangeRDPPort_Click);
+            // 
+            // txtAdminAcc
+            // 
+            this.txtAdminAcc.Location = new System.Drawing.Point(138, 26);
+            this.txtAdminAcc.Name = "txtAdminAcc";
+            this.txtAdminAcc.Size = new System.Drawing.Size(87, 20);
+            this.txtAdminAcc.TabIndex = 0;
+            this.txtAdminAcc.Text = "Administrator";
             // 
             // btnChangePassword
             // 
             this.btnChangePassword.BackColor = System.Drawing.Color.Transparent;
             this.btnChangePassword.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnChangePassword.Location = new System.Drawing.Point(90, 49);
+            this.btnChangePassword.Location = new System.Drawing.Point(228, 53);
             this.btnChangePassword.Name = "btnChangePassword";
-            this.btnChangePassword.Size = new System.Drawing.Size(140, 23);
+            this.btnChangePassword.Size = new System.Drawing.Size(65, 23);
             this.btnChangePassword.TabIndex = 1;
-            this.btnChangePassword.Text = "Change password";
+            this.btnChangePassword.Text = "Change";
             this.btnChangePassword.UseVisualStyleBackColor = false;
             this.btnChangePassword.Click += new System.EventHandler(this.btnChangePassword_Click);
+            // 
+            // txtRDPPort
+            // 
+            this.txtRDPPort.Location = new System.Drawing.Point(138, 84);
+            this.txtRDPPort.Name = "txtRDPPort";
+            this.txtRDPPort.Size = new System.Drawing.Size(87, 20);
+            this.txtRDPPort.TabIndex = 0;
+            this.txtRDPPort.Text = "3388";
             // 
             // chkAutoLogin
             // 
             this.chkAutoLogin.AutoSize = true;
             this.chkAutoLogin.Checked = true;
             this.chkAutoLogin.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkAutoLogin.Location = new System.Drawing.Point(204, 23);
+            this.chkAutoLogin.Location = new System.Drawing.Point(9, 108);
             this.chkAutoLogin.Name = "chkAutoLogin";
-            this.chkAutoLogin.Size = new System.Drawing.Size(73, 17);
+            this.chkAutoLogin.Size = new System.Drawing.Size(91, 17);
             this.chkAutoLogin.TabIndex = 15;
-            this.chkAutoLogin.Text = "Auto login";
+            this.chkAutoLogin.Text = "Set auto login";
             this.chkAutoLogin.UseVisualStyleBackColor = true;
             this.chkAutoLogin.CheckedChanged += new System.EventHandler(this.chkStartUp_CheckedChanged);
             // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(6, 87);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(51, 13);
+            this.label13.TabIndex = 2;
+            this.label13.Text = "RDP port";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(6, 29);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(131, 13);
+            this.label14.TabIndex = 2;
+            this.label14.Text = "Change Administrator acc.";
+            // 
             // txtNewPassword
             // 
-            this.txtNewPassword.Location = new System.Drawing.Point(90, 21);
+            this.txtNewPassword.Location = new System.Drawing.Point(138, 55);
             this.txtNewPassword.Name = "txtNewPassword";
-            this.txtNewPassword.Size = new System.Drawing.Size(109, 20);
+            this.txtNewPassword.Size = new System.Drawing.Size(87, 20);
             this.txtNewPassword.TabIndex = 0;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(6, 24);
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.ForeColor = System.Drawing.Color.Red;
+            this.label4.Location = new System.Drawing.Point(6, 58);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(77, 13);
+            this.label4.Size = new System.Drawing.Size(107, 13);
             this.label4.TabIndex = 2;
-            this.label4.Text = "New password";
+            this.label4.Text = "Change password";
             // 
             // groupBox3
             // 
-            this.groupBox3.Controls.Add(this.label11);
             this.groupBox3.Controls.Add(this.btnExtendDisk);
-            this.groupBox3.Location = new System.Drawing.Point(310, 86);
+            this.groupBox3.Controls.Add(this.label11);
+            this.groupBox3.Location = new System.Drawing.Point(310, 138);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(299, 81);
+            this.groupBox3.Size = new System.Drawing.Size(299, 55);
             this.groupBox3.TabIndex = 2;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Disks";
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(6, 13);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(294, 39);
-            this.label11.TabIndex = 1;
-            this.label11.Text = "If your C drive capacity is not fully extended, you can use this\r\nfunction to ext" +
-    "end it.\r\nNote: This feature works for C drive only.";
             // 
             // btnExtendDisk
             // 
             this.btnExtendDisk.BackColor = System.Drawing.Color.Transparent;
             this.btnExtendDisk.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnExtendDisk.Location = new System.Drawing.Point(90, 53);
+            this.btnExtendDisk.Location = new System.Drawing.Point(153, 26);
             this.btnExtendDisk.Name = "btnExtendDisk";
             this.btnExtendDisk.Size = new System.Drawing.Size(140, 23);
             this.btnExtendDisk.TabIndex = 0;
             this.btnExtendDisk.Text = "Extend disk";
             this.btnExtendDisk.UseVisualStyleBackColor = false;
             this.btnExtendDisk.Click += new System.EventHandler(this.btnExtendDisk_Click);
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(7, 15);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(155, 39);
+            this.label11.TabIndex = 1;
+            this.label11.Text = "Extend C drive to fully capacity.\r\nPlease note that this feature\r\nworks on C driv" +
+    "e only.";
             // 
             // groupBox4
             // 
@@ -366,9 +442,9 @@
             this.groupBox4.Controls.Add(this.chkDisableUpdate);
             this.groupBox4.Controls.Add(this.chkTurnoffESC);
             this.groupBox4.Controls.Add(this.chkDisableUAC);
-            this.groupBox4.Location = new System.Drawing.Point(5, 167);
+            this.groupBox4.Location = new System.Drawing.Point(5, 199);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(299, 215);
+            this.groupBox4.Size = new System.Drawing.Size(299, 214);
             this.groupBox4.TabIndex = 3;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Windows optimization";
@@ -377,7 +453,7 @@
             // 
             this.btnConfigWindows.BackColor = System.Drawing.Color.Transparent;
             this.btnConfigWindows.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnConfigWindows.Location = new System.Drawing.Point(77, 182);
+            this.btnConfigWindows.Location = new System.Drawing.Point(78, 182);
             this.btnConfigWindows.Name = "btnConfigWindows";
             this.btnConfigWindows.Size = new System.Drawing.Size(140, 23);
             this.btnConfigWindows.TabIndex = 15;
@@ -389,7 +465,7 @@
             // 
             this.chkCheckAll.AutoSize = true;
             this.chkCheckAll.BackColor = System.Drawing.Color.Lime;
-            this.chkCheckAll.Location = new System.Drawing.Point(133, 157);
+            this.chkCheckAll.Location = new System.Drawing.Point(134, 157);
             this.chkCheckAll.Name = "chkCheckAll";
             this.chkCheckAll.Size = new System.Drawing.Size(119, 17);
             this.chkCheckAll.TabIndex = 13;
@@ -400,7 +476,7 @@
             // chkDeleteTempFolder
             // 
             this.chkDeleteTempFolder.AutoSize = true;
-            this.chkDeleteTempFolder.Location = new System.Drawing.Point(133, 111);
+            this.chkDeleteTempFolder.Location = new System.Drawing.Point(134, 111);
             this.chkDeleteTempFolder.Name = "chkDeleteTempFolder";
             this.chkDeleteTempFolder.Size = new System.Drawing.Size(132, 17);
             this.chkDeleteTempFolder.TabIndex = 9;
@@ -410,7 +486,7 @@
             // chkPerformanceRDP
             // 
             this.chkPerformanceRDP.AutoSize = true;
-            this.chkPerformanceRDP.Location = new System.Drawing.Point(133, 88);
+            this.chkPerformanceRDP.Location = new System.Drawing.Point(134, 88);
             this.chkPerformanceRDP.Name = "chkPerformanceRDP";
             this.chkPerformanceRDP.Size = new System.Drawing.Size(115, 17);
             this.chkPerformanceRDP.TabIndex = 7;
@@ -420,7 +496,7 @@
             // chkDisableDriverSig
             // 
             this.chkDisableDriverSig.AutoSize = true;
-            this.chkDisableDriverSig.Location = new System.Drawing.Point(133, 65);
+            this.chkDisableDriverSig.Location = new System.Drawing.Point(134, 65);
             this.chkDisableDriverSig.Name = "chkDisableDriverSig";
             this.chkDisableDriverSig.Size = new System.Drawing.Size(136, 17);
             this.chkDisableDriverSig.TabIndex = 5;
@@ -430,7 +506,7 @@
             // chkDisableRecovery
             // 
             this.chkDisableRecovery.AutoSize = true;
-            this.chkDisableRecovery.Location = new System.Drawing.Point(133, 42);
+            this.chkDisableRecovery.Location = new System.Drawing.Point(134, 42);
             this.chkDisableRecovery.Name = "chkDisableRecovery";
             this.chkDisableRecovery.Size = new System.Drawing.Size(146, 17);
             this.chkDisableRecovery.TabIndex = 3;
@@ -440,7 +516,7 @@
             // chkDisableHiberfil
             // 
             this.chkDisableHiberfil.AutoSize = true;
-            this.chkDisableHiberfil.Location = new System.Drawing.Point(133, 19);
+            this.chkDisableHiberfil.Location = new System.Drawing.Point(134, 19);
             this.chkDisableHiberfil.Name = "chkDisableHiberfil";
             this.chkDisableHiberfil.Size = new System.Drawing.Size(166, 17);
             this.chkDisableHiberfil.TabIndex = 1;
@@ -450,7 +526,7 @@
             // chkDisableSleep
             // 
             this.chkDisableSleep.AutoSize = true;
-            this.chkDisableSleep.Location = new System.Drawing.Point(11, 157);
+            this.chkDisableSleep.Location = new System.Drawing.Point(12, 157);
             this.chkDisableSleep.Name = "chkDisableSleep";
             this.chkDisableSleep.Size = new System.Drawing.Size(89, 17);
             this.chkDisableSleep.TabIndex = 12;
@@ -460,7 +536,7 @@
             // chkTurnOffFW
             // 
             this.chkTurnOffFW.AutoSize = true;
-            this.chkTurnOffFW.Location = new System.Drawing.Point(11, 134);
+            this.chkTurnOffFW.Location = new System.Drawing.Point(12, 134);
             this.chkTurnOffFW.Name = "chkTurnOffFW";
             this.chkTurnOffFW.Size = new System.Drawing.Size(98, 17);
             this.chkTurnOffFW.TabIndex = 10;
@@ -470,7 +546,7 @@
             // chkSmallTaskbar
             // 
             this.chkSmallTaskbar.AutoSize = true;
-            this.chkSmallTaskbar.Location = new System.Drawing.Point(11, 111);
+            this.chkSmallTaskbar.Location = new System.Drawing.Point(12, 111);
             this.chkSmallTaskbar.Name = "chkSmallTaskbar";
             this.chkSmallTaskbar.Size = new System.Drawing.Size(89, 17);
             this.chkSmallTaskbar.TabIndex = 8;
@@ -480,7 +556,7 @@
             // chkShowTrayIcon
             // 
             this.chkShowTrayIcon.AutoSize = true;
-            this.chkShowTrayIcon.Location = new System.Drawing.Point(11, 88);
+            this.chkShowTrayIcon.Location = new System.Drawing.Point(12, 88);
             this.chkShowTrayIcon.Name = "chkShowTrayIcon";
             this.chkShowTrayIcon.Size = new System.Drawing.Size(109, 17);
             this.chkShowTrayIcon.TabIndex = 6;
@@ -490,7 +566,7 @@
             // chkDisableUpdate
             // 
             this.chkDisableUpdate.AutoSize = true;
-            this.chkDisableUpdate.Location = new System.Drawing.Point(11, 65);
+            this.chkDisableUpdate.Location = new System.Drawing.Point(12, 65);
             this.chkDisableUpdate.Name = "chkDisableUpdate";
             this.chkDisableUpdate.Size = new System.Drawing.Size(97, 17);
             this.chkDisableUpdate.TabIndex = 4;
@@ -500,7 +576,7 @@
             // chkTurnoffESC
             // 
             this.chkTurnoffESC.AutoSize = true;
-            this.chkTurnoffESC.Location = new System.Drawing.Point(11, 42);
+            this.chkTurnoffESC.Location = new System.Drawing.Point(12, 42);
             this.chkTurnoffESC.Name = "chkTurnoffESC";
             this.chkTurnoffESC.Size = new System.Drawing.Size(100, 17);
             this.chkTurnoffESC.TabIndex = 2;
@@ -510,7 +586,7 @@
             // chkDisableUAC
             // 
             this.chkDisableUAC.AutoSize = true;
-            this.chkDisableUAC.Location = new System.Drawing.Point(11, 19);
+            this.chkDisableUAC.Location = new System.Drawing.Point(12, 19);
             this.chkDisableUAC.Name = "chkDisableUAC";
             this.chkDisableUAC.Size = new System.Drawing.Size(86, 17);
             this.chkDisableUAC.TabIndex = 0;
@@ -523,15 +599,13 @@
             this.groupBox5.Controls.Add(this.chkPutty);
             this.groupBox5.Controls.Add(this.chkBitvise);
             this.groupBox5.Controls.Add(this.chkProxifier);
-            this.groupBox5.Controls.Add(this.chkFirefox);
-            this.groupBox5.Controls.Add(this.chkChrome);
             this.groupBox5.Controls.Add(this.groupBox8);
             this.groupBox5.Controls.Add(this.groupBox10);
             this.groupBox5.Controls.Add(this.groupBox9);
             this.groupBox5.Controls.Add(this.groupBox11);
-            this.groupBox5.Location = new System.Drawing.Point(310, 166);
+            this.groupBox5.Location = new System.Drawing.Point(310, 199);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(299, 215);
+            this.groupBox5.Size = new System.Drawing.Size(299, 214);
             this.groupBox5.TabIndex = 4;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Software installing";
@@ -581,7 +655,7 @@
             // chkFirefox
             // 
             this.chkFirefox.AutoSize = true;
-            this.chkFirefox.Location = new System.Drawing.Point(7, 41);
+            this.chkFirefox.Location = new System.Drawing.Point(7, 30);
             this.chkFirefox.Name = "chkFirefox";
             this.chkFirefox.Size = new System.Drawing.Size(57, 17);
             this.chkFirefox.TabIndex = 2;
@@ -591,7 +665,7 @@
             // chkChrome
             // 
             this.chkChrome.AutoSize = true;
-            this.chkChrome.Location = new System.Drawing.Point(7, 19);
+            this.chkChrome.Location = new System.Drawing.Point(7, 7);
             this.chkChrome.Name = "chkChrome";
             this.chkChrome.Size = new System.Drawing.Size(62, 17);
             this.chkChrome.TabIndex = 0;
@@ -604,7 +678,9 @@
             this.groupBox8.Controls.Add(this.label6);
             this.groupBox8.Controls.Add(this.chkTor);
             this.groupBox8.Controls.Add(this.chkBrave);
+            this.groupBox8.Controls.Add(this.chkFirefox);
             this.groupBox8.Controls.Add(this.chkOpera);
+            this.groupBox8.Controls.Add(this.chkChrome);
             this.groupBox8.Controls.Add(this.chkCoccoc);
             this.groupBox8.Location = new System.Drawing.Point(3, 11);
             this.groupBox8.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
@@ -818,7 +894,7 @@
             this.groupBox6.Controls.Add(this.lnkHome);
             this.groupBox6.Controls.Add(this.label9);
             this.groupBox6.Controls.Add(this.label7);
-            this.groupBox6.Location = new System.Drawing.Point(310, 381);
+            this.groupBox6.Location = new System.Drawing.Point(310, 413);
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.Size = new System.Drawing.Size(299, 73);
             this.groupBox6.TabIndex = 5;
@@ -880,7 +956,7 @@
             this.groupBox7.Controls.Add(this.linkLabel2);
             this.groupBox7.Controls.Add(this.label10);
             this.groupBox7.Controls.Add(this.label12);
-            this.groupBox7.Location = new System.Drawing.Point(5, 381);
+            this.groupBox7.Location = new System.Drawing.Point(5, 413);
             this.groupBox7.Name = "groupBox7";
             this.groupBox7.Size = new System.Drawing.Size(299, 73);
             this.groupBox7.TabIndex = 5;
@@ -950,11 +1026,33 @@
             // 
             this.ttAutologin.AutomaticDelay = 50;
             // 
+            // label100
+            // 
+            this.label100.AutoSize = true;
+            this.label100.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label100.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            this.label100.Location = new System.Drawing.Point(55, 87);
+            this.label100.Name = "label100";
+            this.label100.Size = new System.Drawing.Size(36, 13);
+            this.label100.TabIndex = 2;
+            this.label100.Text = "Now:";
+            // 
+            // lblCurrentRDPPort
+            // 
+            this.lblCurrentRDPPort.AutoSize = true;
+            this.lblCurrentRDPPort.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCurrentRDPPort.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.lblCurrentRDPPort.Location = new System.Drawing.Point(89, 87);
+            this.lblCurrentRDPPort.Name = "lblCurrentRDPPort";
+            this.lblCurrentRDPPort.Size = new System.Drawing.Size(35, 13);
+            this.lblCurrentRDPPort.TabIndex = 2;
+            this.lblCurrentRDPPort.Text = "3389";
+            // 
             // form_LowEndVietFastVPSConfig
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(612, 457);
+            this.ClientSize = new System.Drawing.Size(612, 490);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupBox7);
             this.Controls.Add(this.groupBox6);
@@ -1071,6 +1169,14 @@
         private System.Windows.Forms.CheckBox chk4K;
         private System.Windows.Forms.GroupBox groupBox11;
         private System.Windows.Forms.CheckBox chkWinRAR;
+        private System.Windows.Forms.Button btnChangeAdminAcc;
+        private System.Windows.Forms.Button btnChangeRDPPort;
+        private System.Windows.Forms.TextBox txtAdminAcc;
+        private System.Windows.Forms.TextBox txtRDPPort;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Label label100;
+        private System.Windows.Forms.Label lblCurrentRDPPort;
     }
 }
 

@@ -13,6 +13,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace LowEndViet.com_VPS_Tool
@@ -21,12 +22,13 @@ namespace LowEndViet.com_VPS_Tool
     {
         #region Final variables
         static readonly string APPNAME = "VM QuickConfig";
-        public readonly string VERSION = "1.2";
+        public readonly string VERSION = "1.3";
         static readonly string GITNAME = "VM QuickConfig";
         static readonly string GITHOME = "https://github.com/chieunhatnang/VM-QuickConfig";
 
         static readonly string REG_STARTUP = "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run\\";
         static readonly string REG_LEV = "Software\\LEV\\VMQuickConfig";
+        static readonly string REG_RDP_PORT = "SYSTEM\\CurrentControlSet\\Control\\Terminal Server\\WinStations\\RDP-Tcp";
         static readonly string LEV_DIR = "C:\\Users\\Public\\LEV\\";
         static readonly string DISKPART_CONFIG_PATH = LEV_DIR + "diskpartconfig.txt";
         static readonly string NETWORK_CONFIG_PATH = LEV_DIR + "networkconfig.txt";
@@ -41,9 +43,11 @@ namespace LowEndViet.com_VPS_Tool
 
         RegistryKey LEVStartupKey;
         RegistryKey LEVRegKey;
+
+        string currentUsername;
         #endregion
 
-        public form_LowEndVietFastVPSConfig(string [] args)
+        public form_LowEndVietFastVPSConfig(string[] args)
         {
             InitializeComponent();
             this.MaximumSize = this.Size;
@@ -81,7 +85,22 @@ namespace LowEndViet.com_VPS_Tool
                             loadNetworkConfigFile(configOnCD);
                         }
                     }
-            }        
+            }
+
+            // Get & set current username which runs the app
+            string fullUsername = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
+            if (fullUsername.Contains("\\"))
+            {
+                currentUsername = fullUsername.Split('\\')[fullUsername.Split('\\').Length - 1];
+            }
+            else
+            {
+                currentUsername = fullUsername;
+            }
+            txtAdminAcc.Text = currentUsername;
+
+            // Get & set current RDP port
+            lblCurrentRDPPort.Text = Registry.LocalMachine.OpenSubKey(REG_RDP_PORT).GetValue("PortNumber").ToString();
         }
 
         #region Event Processing
@@ -98,7 +117,7 @@ namespace LowEndViet.com_VPS_Tool
                 {
                     executeCommand("explorer.exe");
                     newPassword = frm.newPassword;
-                    changePassword(newPassword);
+                    changePassword("Administrator", newPassword);
                     setupAutoLogin(newPassword);
                     LEVRegKey.SetValue("ForceChangePassword", 0);
                     chkForceChangePass.Checked = false;
@@ -128,7 +147,7 @@ namespace LowEndViet.com_VPS_Tool
             if (rdStatic.Checked)
             {
                 setStaticIP(txtIP.Text, txtNetmask.Text, txtGateway.Text, txtCustomDNS.Text);
-                string config = txtIP.Text  + Environment.NewLine
+                string config = txtIP.Text + Environment.NewLine
                                             + txtNetmask.Text + Environment.NewLine
                                             + txtGateway.Text + Environment.NewLine
                                             + txtCustomDNS.Text + Environment.NewLine;
@@ -161,17 +180,57 @@ namespace LowEndViet.com_VPS_Tool
                 txtCustomDNS.Enabled = false;
             }
         }
-     
+
 
         private void btnChangePassword_Click(object sender, EventArgs e)
         {
-            changePassword(txtNewPassword.Text);
+            string adminAcc = txtAdminAcc.Text;
+            DialogResult dialogResult = MessageBox.Show("You are changing the password of username \"" + adminAcc + "\"" +
+                "\r\nIf \"" + adminAcc + "\" is not your Administrator account, please enter your Administrator account on the text box \"Change Administrator acc.\" above.\r\n" +
+                "The next time, pleaes login with the new credentials: \r\n\r\n" +
+                adminAcc + "\r\n" +
+                txtNewPassword.Text,
+                "Change password for " + adminAcc + " ?", MessageBoxButtons.OKCancel);
+            changePassword(adminAcc, txtNewPassword.Text);
             if (chkAutoLogin.Checked)
             {
                 setupAutoLogin(txtNewPassword.Text);
             }
         }
 
+        private void btnChangeAdminAcc_Click(object sender, EventArgs e)
+        {
+            string newAdminAcc = txtAdminAcc.Text;
+            DialogResult dialogResult = MessageBox.Show("You are renaming your account to " + newAdminAcc + ". You may need to restart to apply the change. Please re-login using the new username:\r\n\r\n" + newAdminAcc,
+                "Rename account to " + newAdminAcc + " ?", MessageBoxButtons.OKCancel);
+            if (dialogResult == DialogResult.OK)
+            {
+                executeCommand("wmic useraccount where name='" + currentUsername + "' call rename name='" + txtAdminAcc.Text + "'");
+                DialogResult dialogResult2 = MessageBox.Show("Successfully renamed your account to " + newAdminAcc + ". Do you want to RESTART now?",
+                    "Success!", MessageBoxButtons.YesNo);
+                if (dialogResult2 == DialogResult.Yes)
+                {
+                    executeCommand("shutdown /r /t 5");
+                }
+            }
+        }
+
+        private void btnChangeRDPPort_Click(object sender, EventArgs e)
+        {
+            string newRDPPort = txtRDPPort.Text;
+            DialogResult dialogResult = MessageBox.Show("You are changing RDP port to " + newRDPPort + ". After press OK, you will be DISCONNETED!!!\r\nPlease connect to the following address instead:\r\n\r\n" + txtIP.Text + ":" + newRDPPort,
+                "Change remote port to " + newRDPPort + " ?", MessageBoxButtons.OKCancel);
+            if (dialogResult == DialogResult.OK)
+            {
+                string portHexa = "0x" + int.Parse(newRDPPort).ToString("X");
+                executeCommand("reg add \"HKEY_LOCAL_MACHINE\\" + REG_RDP_PORT + "\" /v PortNumber /t REG_DWORD /d " + portHexa + " /f");
+                executeCommand("netsh advfirewall firewall add rule name = \"Secure RDP on port " + newRDPPort + "\" dir =in action = allow protocol = TCP localport = " + newRDPPort);
+                executeCommand("net stop \"TermService\" /y && net start \"TermService\"");
+                MessageBox.Show("Successfully change RDP port!", "Success!",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                lblCurrentRDPPort.Text = newRDPPort;
+            }
+        }
 
         private void btnExtendDisk_Click(object sender, EventArgs e)
         {
@@ -183,7 +242,7 @@ namespace LowEndViet.com_VPS_Tool
 
         private void btnCheckAll_CheckedChanged(object sender, EventArgs e)
         {
-            foreach(LevCheckbox levCheckbox in levCheckbox4WindowsList)
+            foreach (LevCheckbox levCheckbox in levCheckbox4WindowsList)
             {
                 levCheckbox.checkBox.Checked = chkCheckAll.Checked;
             }
@@ -225,13 +284,13 @@ namespace LowEndViet.com_VPS_Tool
             StatusForm statusForm = new StatusForm(levCheckbox4Software);
             statusForm.Show();
             WebClient wc = new WebClient();
-            Thread t = new Thread(() =>
+            Task t = new Task(() =>
             {
                 foreach (LevCheckbox levCheckbox in levCheckbox4Software)
                 {
                     if (levCheckbox.checkBox.Checked)
                     {
-                        
+
                         ServicePointManager.Expect100Continue = true;
                         ServicePointManager.DefaultConnectionLimit = 9999;
 
@@ -247,7 +306,7 @@ namespace LowEndViet.com_VPS_Tool
                         {
                             wc.DownloadFile(levCheckbox.softwareURL, Path.GetTempPath() + levCheckbox.setupFileName);
                         }
-                        catch(Exception ex)
+                        catch (Exception ex)
                         {
                             levCheckbox.remark = ex.Message;
                         }
@@ -270,7 +329,8 @@ namespace LowEndViet.com_VPS_Tool
             if (chkStartUp.Checked == true)
             {
                 LEVStartupKey.SetValue(APPNAME, Application.ExecutablePath);
-            } else
+            }
+            else
             {
                 LEVStartupKey.DeleteValue(APPNAME, false);
             }
@@ -347,47 +407,48 @@ namespace LowEndViet.com_VPS_Tool
             // Initialize LevCheckbox list for software
             if (Environment.Is64BitOperatingSystem) // 64 bit OS
             {
-                levCheckbox4Software = new List<LevCheckbox>(new LevCheckbox[]
+                levCheckbox4Software = new List<LevCheckbox>(new LevCheckbox[] 
                 {
                     new LevCheckbox(chkChrome, "https://dl.google.com/tag/s/appguid%3D%7B8A69D345-D564-463C-AFF1-A69D9E530F96%7D%26iid%3D%7B162F372C-537B-5D4B-4170-3A63D3FA265F%7D%26lang%3Den%26browser%3D4%26usagestats%3D0%26appname%3DGoogle%2520Chrome%26needsadmin%3Dprefers%26ap%3Dx64-stable-statsdef_1%26installdataindex%3Ddefaultbrowser/chrome/install/ChromeStandaloneSetup64.exe",
                                     "ChromeSetup64.exe", "ChromeSetup64.exe /silent /install"),
                     new LevCheckbox(chkCoccoc, "http://files.coccoc.com/browser/coccoc_standalone_vi.exe", "CocCocSetup.exe", "CocCocSetup.exe /silent /install"),
-                    new LevCheckbox(chkUnikey, "http://file.levnode.com/Software/UniKey42RC.exe", "UniKey42RC.exe", "copy UniKey42RC.exe " + Environment.GetFolderPath(Environment.SpecialFolder.Desktop)),
-                    new LevCheckbox(chkIDMSilient, "http://file.levnode.com/Software/IDM.60710.SiLeNt.InStAlL.exe", "IDMSilent.exe", "IDMSilent.exe /silent /install"),
+                    new LevCheckbox(chkUnikey, "http://file.lowendviet.com/Software/UniKey42RC.exe", "UniKey42RC.exe", " & copy " + Path.GetTempPath() + "UniKey42RC.exe " + Environment.GetFolderPath(Environment.SpecialFolder.Desktop)),
+                    new LevCheckbox(chkIDMSilient, "http://file.lowendviet.com/Software/IDM.60710.SiLeNt.InStAlL.exe", "IDMSilent.exe", "IDMSilent.exe /silent /install"),
                     new LevCheckbox(chkNotepad, "https://notepad-plus-plus.org/repository/7.x/7.5.6/npp.7.5.6.Installer.exe", "npp.exe", "npp.exe /S"),
-                    new LevCheckbox(chkOpera, "https://ftp.opera.com/pub/opera/desktop/53.0.2907.37/win/Opera_53.0.2907.37_Setup.exe", "OperaSetup.exe", "OperaSetup.exe /silent /install"),
+                    new LevCheckbox(chkOpera, "https://ftp.opera.com/pub/opera/desktop/69.0.3686.77/win/Opera_69.0.3686.77_Setup_x64.exe", "OperaSetup.exe", "OperaSetup.exe /silent /install"),
                     new LevCheckbox(chkCcleaner, "https://download.ccleaner.com/ccsetup542.exe", "CCleaner.exe", "CCleaner.exe /S"),
                     new LevCheckbox(chk7zip, "https://www.7-zip.org/a/7z1900-x64.exe", "7zSetup.exe", "7zSetup.exe /S"),
                     new LevCheckbox(chkNET48, "https://download.visualstudio.microsoft.com/download/pr/014120d7-d689-4305-befd-3cb711108212/0fd66638cde16859462a6243a4629a50/ndp48-x86-x64-allos-enu.exe", "net48.exe", "net48.exe /q /norestart"),
-                    new LevCheckbox(chkProxifier, "http://file.levnode.com/Software/Proxifier%203.21%20Setup.exe", "ProxifierSetup.exe", "ProxifierSetup.exe /S", "Use this key to register: KFZUS-F3JGV-T95Y7-BXGAS-5NHHP"),
+                    new LevCheckbox(chkProxifier, "http://file.lowendviet.com/Software/Proxifier%203.21%20Setup.exe", "ProxifierSetup.exe", "ProxifierSetup.exe /S", "Use this key to register: KFZUS-F3JGV-T95Y7-BXGAS-5NHHP"),
                     new LevCheckbox(chkBitvise, "https://dl.bitvise.com/BvSshClient-Inst.exe", "BitviseSSH.exe", "BitviseSSH.exe -acceptEULA -force"),
                     new LevCheckbox(chkBrave, "https://laptop-updates.brave.com/latest/winx64", "Brave.exe", "Brave.exe /silent /install"),
-                    new LevCheckbox(chkTor, "https://www.torproject.org/dist/torbrowser/8.5.5/torbrowser-install-win64-8.5.5_en-US.exe", "Tor.exe", "Tor.exe /S"),
-                    new LevCheckbox(chkPutty, "https://the.earth.li/~sgtatham/putty/latest/w64/putty-64bit-0.73-installer.msi", "Putty64.exe", "msiexec /i Putty64.exe /quiet /qn"),
+                    new LevCheckbox(chkTor, "https://www.torproject.org/dist/torbrowser/9.5.1/torbrowser-install-win64-9.5.1_en-US.exe", "Tor.exe", "Tor.exe /S"),
+                    new LevCheckbox(chkPutty, "https://the.earth.li/~sgtatham/putty/latest/w64/putty-64bit-0.74-installer.msi", "Putty64.exe", "msiexec /i Putty64.exe /quiet /qn"),
                     new LevCheckbox(chk4K, "https://dl.4kdownload.com/app/4kvideodownloader_4.9.2_x64.msi?source=website", "4KDownloader.exe", "msiexec /i 4KDownloader.exe /quiet /qn"),
                     new LevCheckbox(chkUTorrent, "http://download-hr.utorrent.com/track/stable/endpoint/utorrent/os/windows", "uTorrent.exe", "uTorrent.exe"),
                     new LevCheckbox(chkBitTorrent, "https://www.bittorrent.com/downloads/complete/track/stable/os/win", "BitTorrent.exe", "BitTorrent.exe"),
                     new LevCheckbox(chkWinRAR, "https://www.rarlab.com/rar/winrar-x64-58b2.exe", "WinRAR.exe", "WinRAR.exe /s"),
                 });
-            } else
+            }
+            else
             {
                 levCheckbox4Software = new List<LevCheckbox>(new LevCheckbox[]
                 {
                     new LevCheckbox(chkChrome, "https://dl.google.com/tag/s/appguid%3D%7B8A69D345-D564-463C-AFF1-A69D9E530F96%7D%26iid%3D%7B6895D2F5-C00B-C0C3-5A9F-9F5A2D9AE003%7D%26lang%3Den%26browser%3D4%26usagestats%3D0%26appname%3DGoogle%2520Chrome%26needsadmin%3Dprefers%26installdataindex%3Ddefaultbrowser/update2/installers/ChromeSetup.exe",
                                     "ChromeSetup.exe", "ChromeSetup.exe /silent /install"),
                     new LevCheckbox(chkCoccoc, "http://files.coccoc.com/browser/coccoc_standalone_vi.exe", "CocCocSetup.exe", "CocCocSetup.exe /silent /install"),
-                    new LevCheckbox(chkUnikey, "http://file.levnode.com/Software/UniKey42RC.exe", "UniKey42RC.exe", "copy UniKey42RC.exe " + Environment.GetFolderPath(Environment.SpecialFolder.Desktop)),
-                    new LevCheckbox(chkIDMSilient, "http://file.levnode.com/Software/IDM.60710.SiLeNt.InStAlL.exe", "IDMSilent.exe", "IDMSilent.exe /silent /install"),
+                    new LevCheckbox(chkUnikey, "http://file.lowendviet.com/Software/UniKey42RC.exe", "UniKey42RC.exe", " & copy " + Path.GetTempPath() + "UniKey42RC.exe " + Environment.GetFolderPath(Environment.SpecialFolder.Desktop)),
+                    new LevCheckbox(chkIDMSilient, "http://file.lowendviet.com/Software/IDM.60710.SiLeNt.InStAlL.exe", "IDMSilent.exe", "IDMSilent.exe /silent /install"),
                     new LevCheckbox(chkNotepad, "https://notepad-plus-plus.org/repository/7.x/7.5.6/npp.7.5.6.Installer.exe", "npp.exe", "npp.exe /S"),
-                    new LevCheckbox(chkOpera, "https://ftp.opera.com/pub/opera/desktop/53.0.2907.37/win/Opera_53.0.2907.37_Setup.exe", "OperaSetup.exe", "OperaSetup.exe /silent /install"),
+                    new LevCheckbox(chkOpera, "https://ftp.opera.com/pub/opera/desktop/69.0.3686.77/win/Opera_69.0.3686.77_Setup.exe", "OperaSetup.exe", "OperaSetup.exe /silent /install"),
                     new LevCheckbox(chkCcleaner, "https://download.ccleaner.com/ccsetup542.exe", "CCleaner.exe", "CCleaner.exe /S"),
                     new LevCheckbox(chk7zip, "https://www.7-zip.org/a/7z1900.exe", "7zSetup.exe", "7zSetup.exe /S"),
                     new LevCheckbox(chkNET48, "https://download.visualstudio.microsoft.com/download/pr/014120d7-d689-4305-befd-3cb711108212/0fd66638cde16859462a6243a4629a50/ndp48-x86-x64-allos-enu.exe", "net48.exe", "net48.exe /q /norestart"),
-                    new LevCheckbox(chkProxifier, "http://file.levnode.com/Software/Proxifier%203.21%20Setup.exe", "ProxifierSetup.exe", "ProxifierSetup.exe /S", "Use this key to register: KFZUS-F3JGV-T95Y7-BXGAS-5NHHP"),
+                    new LevCheckbox(chkProxifier, "http://file.lowendviet.com/Software/Proxifier%203.21%20Setup.exe", "ProxifierSetup.exe", "ProxifierSetup.exe /S", "Use this key to register: KFZUS-F3JGV-T95Y7-BXGAS-5NHHP"),
                     new LevCheckbox(chkBitvise, "https://dl.bitvise.com/BvSshClient-Inst.exe", "BitviseSSH.exe", "BitviseSSH.exe -acceptEULA -force"),
                     new LevCheckbox(chkBrave, "https://laptop-updates.brave.com/latest/winx64", "Brave.exe", "Brave.exe /silent /install"),
-                    new LevCheckbox(chkTor, "https://dl.bitvise.com/BvSshClient-Inst.exe", "Tor.exe", "Tor.exe /S"),
-                    new LevCheckbox(chkPutty, "https://the.earth.li/~sgtatham/putty/latest/w32/putty-0.73-installer.msi", "Putty.exe", "msiexec /i Putty.exe /quiet /qn"),
+                    new LevCheckbox(chkTor, "https://www.torproject.org/dist/torbrowser/9.5.1/torbrowser-install-9.5.1_en-US.exee", "Tor.exe", "Tor.exe /S"),
+                    new LevCheckbox(chkPutty, "https://the.earth.li/~sgtatham/putty/latest/w32/putty-0.74-installer.msi", "Putty.exe", "msiexec /i Putty.exe /quiet /qn"),
                     new LevCheckbox(chk4K, "https://dl.4kdownload.com/app/4kvideodownloader_4.9.2.msi?source=website", "4KDownloader.exe", "msiexec /i 4KDownloader.exe /quiet /qn"),
                     new LevCheckbox(chkUTorrent, "http://download-hr.utorrent.com/track/stable/endpoint/utorrent/os/windows", "uTorrent.exe", "uTorrent.exe"),
                     new LevCheckbox(chkBitTorrent, "https://www.bittorrent.com/downloads/complete/track/stable/os/win", "BitTorrent.exe", "BitTorrent.exe"),
@@ -396,7 +457,7 @@ namespace LowEndViet.com_VPS_Tool
             }
         }
 
-        private void initRegistry ()
+        private void initRegistry()
         {
             LEVStartupKey = Registry.LocalMachine.OpenSubKey(REG_STARTUP, true);
             LEVRegKey = Registry.CurrentUser.OpenSubKey(REG_LEV, true);
@@ -485,7 +546,7 @@ namespace LowEndViet.com_VPS_Tool
             executeCommand("REG ADD \"HKLM\\Software\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon\" /v DefaultPassword /t REG_SZ /d " + autoLoginPassword + " /f");
         }
 
-        private void changePassword(string newPassword)
+        private void changePassword(string account, string newPassword)
         {
             if (newPassword.Length < 8 || !(newPassword.Any(char.IsUpper) && newPassword.Any(char.IsLower) && newPassword.Any(char.IsDigit)))
             {
@@ -493,11 +554,11 @@ namespace LowEndViet.com_VPS_Tool
             }
             else
             {
-                executeCommand("net user Administrator \"" + newPassword + "\"", true);
+                executeCommand("net user " + account + " \"" + newPassword + "\"", true);
                 MessageBox.Show("Successfully change Windows password!", "Success!",
                 MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-        
+
         }
 
         private static void setStaticIP(string ip, string netmask, string gateway, string dns)
@@ -649,7 +710,7 @@ namespace LowEndViet.com_VPS_Tool
             public string serverName { get; set; }
             public string DNS1 { get; set; }
 
-            public DNSConfig (string serverName, string DNS1)
+            public DNSConfig(string serverName, string DNS1)
             {
                 this.serverName = serverName;
                 this.DNS1 = DNS1;

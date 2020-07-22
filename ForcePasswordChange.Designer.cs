@@ -32,6 +32,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.txtNewPassword = new System.Windows.Forms.TextBox();
             this.btnForceChangePassword = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
+            this.lblPasswordStrength = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -64,8 +66,7 @@
             // 
             // btnForceChangePassword
             // 
-            this.btnForceChangePassword.Enabled = false;
-            this.btnForceChangePassword.Location = new System.Drawing.Point(118, 100);
+            this.btnForceChangePassword.Location = new System.Drawing.Point(118, 119);
             this.btnForceChangePassword.Name = "btnForceChangePassword";
             this.btnForceChangePassword.Size = new System.Drawing.Size(75, 23);
             this.btnForceChangePassword.TabIndex = 2;
@@ -73,13 +74,35 @@
             this.btnForceChangePassword.UseVisualStyleBackColor = true;
             this.btnForceChangePassword.Click += new System.EventHandler(this.btnForceChangePassword_Click);
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(12, 93);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(47, 13);
+            this.label3.TabIndex = 0;
+            this.label3.Text = "Strength";
+            // 
+            // lblPasswordStrength
+            // 
+            this.lblPasswordStrength.AutoSize = true;
+            this.lblPasswordStrength.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPasswordStrength.ForeColor = System.Drawing.Color.Red;
+            this.lblPasswordStrength.Location = new System.Drawing.Point(115, 93);
+            this.lblPasswordStrength.Name = "lblPasswordStrength";
+            this.lblPasswordStrength.Size = new System.Drawing.Size(48, 16);
+            this.lblPasswordStrength.TabIndex = 0;
+            this.lblPasswordStrength.Text = "Weak";
+            // 
             // ForcePasswordChange
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(297, 138);
+            this.ClientSize = new System.Drawing.Size(297, 154);
             this.Controls.Add(this.btnForceChangePassword);
             this.Controls.Add(this.txtNewPassword);
+            this.Controls.Add(this.lblPasswordStrength);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Name = "ForcePasswordChange";
@@ -95,5 +118,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox txtNewPassword;
         private System.Windows.Forms.Button btnForceChangePassword;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label lblPasswordStrength;
     }
 }
