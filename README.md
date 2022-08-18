@@ -8,10 +8,11 @@ This tool will need .NET Framework 4.0 or newer to run.
 ---
 ## Feature
 ### Network config: 
-- Static IP/DHCP
-- IP/Netmask/Gateway/DNS
+- Static IP/DHCP for IPv4/IPv6
+- IP/Netmask/Gateway/DNS for IPv4/IPv6
 ### Security tool
 - You can change the default Windows Administrator account to a different account to make it more secure.
+- You can open TCP incoming port on firewall.
 - You can change the RDP port to other port other than 3389.
 - You can change the Windows password without knowing the old password. *_Note_*: The new password must be at least 8 characters and contains both UPPERCASE, lowercase and number.
 ### Disk extender tool
@@ -42,6 +43,7 @@ Some popular softwares are integrated for easier install. They are set to silent
 - Proxifier
 - Bitvise Tunnelier
 - Putty
+- CCProxy
 #### Download tool
 - Internet download manager
 - 4K Video downloader
