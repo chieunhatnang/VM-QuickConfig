@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32526.322
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LowEndViet.com VPS Tool", "LowEndViet.com VPS Tool.csproj", "{EF486603-F72F-4445-BC43-9E1631C2D727}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EF486603-F72F-4445-BC43-9E1631C2D727}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF486603-F72F-4445-BC43-9E1631C2D727}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF486603-F72F-4445-BC43-9E1631C2D727}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF486603-F72F-4445-BC43-9E1631C2D727}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D95DEA59-D94E-4883-878F-097FC3D3679A}
+	EndGlobalSection
+EndGlobal

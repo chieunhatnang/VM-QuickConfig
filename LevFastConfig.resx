@@ -117,6 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="label11.Text" xml:space="preserve">
+    <value>In some case, Windows will not expand the disk automatically. This tool can extend the C drive to fully capacity. Please note that this feature works on C drive only.
+If you have other drives, please use "Disk management".</value>
+  </data>
   <metadata name="ttAutologin.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>

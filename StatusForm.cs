@@ -31,12 +31,12 @@ namespace LowEndViet.com_VPS_Tool
             this.Close();
         }
 
-        public void updateProgress()
+        public void updateProgress(string manualStatus = "")
         {
             if (this.rtbProgress.InvokeRequired)
             {
                 DelegateUpdateProgress d = new DelegateUpdateProgress(updateProgress);
-                this.Invoke(d);
+                this.Invoke(d, manualStatus);
             }
             else
             {
@@ -48,10 +48,11 @@ namespace LowEndViet.com_VPS_Tool
                         this.rtbProgress.Text += levCheckbox.status + Environment.NewLine;
                     }
                 }
+                this.rtbProgress.Text += manualStatus;
                 this.rtbProgress.Update();
             }
         }
 
-        private delegate void DelegateUpdateProgress();
+        private delegate void DelegateUpdateProgress(string manualStatus);
     }
 }

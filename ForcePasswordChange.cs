@@ -13,6 +13,7 @@ namespace LowEndViet.com_VPS_Tool
 {
     public partial class ForcePasswordChange : Form
     {
+        public string oldPassword { get; set; }
         public string newPassword { get; set; }
 
         public ForcePasswordChange()
@@ -22,7 +23,13 @@ namespace LowEndViet.com_VPS_Tool
 
         private void btnForceChangePassword_Click(object sender, EventArgs e)
         {
-            submitPassword();
+            if (txtNewPassword.Text == txtNewPassword2.Text)
+            {
+                submitPassword();
+            } else
+            {
+                MessageBox.Show("NEW Passwords not match!");
+            }
         }
 
         private void txtNewPassword_TextChanged(object sender, EventArgs e)
@@ -88,6 +95,7 @@ namespace LowEndViet.com_VPS_Tool
                 MessageBox.Show("Password must be:\r\n- More than 8 characters\r\n- Contains UPPER CASE leters (A-Z)\r\n- Contains lower case letter (a-z)\r\n- Contains number (0-9)");
                 return;
             }
+            this.oldPassword = txtOldPassword.Text;
             this.newPassword = txtNewPassword.Text;
             this.DialogResult = DialogResult.OK;
             this.Close();
