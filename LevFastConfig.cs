@@ -785,19 +785,25 @@ namespace LowEndViet.com_VPS_Tool
                 txtNetmask.Text = lines[1];
                 txtGateway.Text = lines[2];
                 cmbDNS.SelectedIndex = cmbDNS.Items.Count - 1;
-                txtCustomDNS.Text = lines[3];
+                if (lines.Length >= 4)
+                {
+                    txtCustomDNS.Text = lines[3];
+                }
                 #endregion
 
-                if (lines.Length > 4)
+                #region Load IPv6 configuration
+                if (lines.Length >= 7)
                 {
-                    #region Load IPv6 configuration
                     txtIPV6.Text = lines[4];
                     txtNetmaskV6.Text = lines[5];
                     txtGatewayV6.Text = lines[6];
                     cbbDNSV6.SelectedIndex = cbbDNSV6.Items.Count - 1;
-                    txtCustomDNSV6.Text = lines[7];
-                    #endregion
                 }
+                if (lines.Length >= 8)
+                {
+                    txtCustomDNSV6.Text = lines[7];
+                }
+                #endregion
 
             }
             catch
@@ -1140,12 +1146,29 @@ namespace LowEndViet.com_VPS_Tool
         }
         private static NetworkInterface GetActiveEthernetOrWifiNetworkInterface()
         {
-            var Nic = NetworkInterface.GetAllNetworkInterfaces().FirstOrDefault(
-                a => a.OperationalStatus == OperationalStatus.Up &&
-                (a.NetworkInterfaceType == NetworkInterfaceType.Wireless80211 || a.NetworkInterfaceType == NetworkInterfaceType.Ethernet) &&
-                a.GetIPProperties().GatewayAddresses.Any(g => g.Address.AddressFamily.ToString() == "InterNetwork"));
-
-            return Nic;
+            try
+            {
+                var nic = NetworkInterface.GetAllNetworkInterfaces().FirstOrDefault(
+                    a => a.OperationalStatus == OperationalStatus.Up &&
+                    (a.NetworkInterfaceType == NetworkInterfaceType.Wireless80211 || a.NetworkInterfaceType == NetworkInterfaceType.Ethernet) &&
+                    a.GetIPProperties().GatewayAddresses.Any(g => g.Address.AddressFamily.ToString() == "InterNetwork"));
+                if (nic == null)
+                {
+                    nic = NetworkInterface.GetAllNetworkInterfaces().FirstOrDefault(
+                        a => a.NetworkInterfaceType != NetworkInterfaceType.Loopback &&
+                        a.NetworkInterfaceType != NetworkInterfaceType.Tunnel);
+                }
+                if (nic == null)
+                {
+                    nic = NetworkInterface.GetAllNetworkInterfaces().FirstOrDefault(
+                        a => a.OperationalStatus == OperationalStatus.Up);
+                }
+                return nic;
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         private static string[] getCurrentIPv6List (NetworkInterface networkInterface)
