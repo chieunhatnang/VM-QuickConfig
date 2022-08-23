@@ -25,7 +25,7 @@ namespace LowEndViet.com_VPS_Tool
     {
         #region Final variables
         static readonly string APPNAME = "VM QuickConfig";
-        public readonly string VERSION = "1.6";
+        public readonly string VERSION = "1.6.1";
         static readonly string GITNAME = "VM QuickConfig";
         static readonly string GITHOME = "https://github.com/chieunhatnang/VM-QuickConfig";
 
@@ -119,6 +119,7 @@ namespace LowEndViet.com_VPS_Tool
         #region Event Processing
         private void Form_LowEndVietFastVPSConfig_Load(object sender, EventArgs e)
         {
+
             // Check and force change password
             if (LEVRegKey.GetValue("ForceChangePassword").ToString() == "1")
             {
@@ -970,24 +971,67 @@ namespace LowEndViet.com_VPS_Tool
         /// <param name="noWindow">The <see cref="ProcessStartInfo.CreateNoWindow"/>. Do we prevent the creation of CMD window to run silently ? (silent by default)</param>
         /// <returns>True if <paramref name="processName"/> isn't null and process execution succeeded. False if <paramref name="processName"/> is null or empty.
         /// Throw an <see cref="Exception"/> if execution failed</returns>
-        private static string StartProcess(string processName, string args, string verb = null, bool useShell = false, bool redirectErros = true, bool redirectOutput = true, bool noWindow = true)
+        private static string StartProcess(string processName, string args, string verb = null, bool useShell = false, bool redirectErros = true, bool redirectOutput = true, bool noWindow = true, int timeout = 10000)
         {
-            ProcessStartInfo psi = new ProcessStartInfo();
-            psi.FileName = processName;
-            psi.Arguments = args;
-            psi.UseShellExecute = useShell;
-            psi.RedirectStandardOutput = redirectOutput;
-            psi.RedirectStandardError = redirectErros;
-            psi.CreateNoWindow = noWindow;
-            if (verb != null)
-                psi.Verb = verb;
-            Process proc = Process.Start(psi);
-            proc.WaitForExit();
-            string errors = proc.StandardError.ReadToEnd();
-            string output = proc.StandardOutput.ReadToEnd();
-            if (proc.ExitCode != 0)
-                throw new Exception(processName + " exit code: " + proc.ExitCode.ToString() + " " + (!string.IsNullOrEmpty(errors) ? " " + errors : "") + " " + (!string.IsNullOrEmpty(output) ? " " + output : ""));
-            return output;
+            using (Process process = new Process())
+            {
+                process.StartInfo.FileName = processName;
+                process.StartInfo.Arguments = args;
+                process.StartInfo.UseShellExecute = useShell;
+                process.StartInfo.RedirectStandardOutput = redirectOutput;
+                process.StartInfo.RedirectStandardError = redirectErros;
+                process.StartInfo.CreateNoWindow = noWindow;
+
+                StringBuilder output = new StringBuilder();
+                StringBuilder error = new StringBuilder();
+
+                using (AutoResetEvent outputWaitHandle = new AutoResetEvent(false))
+                using (AutoResetEvent errorWaitHandle = new AutoResetEvent(false))
+                {
+                    process.OutputDataReceived += (sender, e) =>
+                    {
+                        if (e.Data == null)
+                        {
+                            outputWaitHandle.Set();
+                        }
+                        else
+                        {
+                            output.AppendLine(e.Data);
+                        }
+                    };
+                    process.ErrorDataReceived += (sender, e) =>
+                    {
+                        if (e.Data == null)
+                        {
+                            errorWaitHandle.Set();
+                        }
+                        else
+                        {
+                            error.AppendLine(e.Data);
+                        }
+                    };
+
+                    process.Start();
+
+                    process.BeginOutputReadLine();
+                    process.BeginErrorReadLine();
+
+                    if (process.WaitForExit(timeout) &&
+                        outputWaitHandle.WaitOne(timeout) &&
+                        errorWaitHandle.WaitOne(timeout))
+                    {
+                        if (process.ExitCode != 0)
+                            throw new Exception(processName + " exit code: " + process.ExitCode.ToString() +
+                                " " + (String.IsNullOrEmpty(error.ToString()) ? " " + error.ToString() : "") + " " +
+                                (String.IsNullOrEmpty(output.ToString()) ? " " + output.ToString() : ""));
+                        return output.ToString();
+                    }
+                    else
+                    {
+                        throw new Exception("Timeout executing!");
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -1043,10 +1087,13 @@ namespace LowEndViet.com_VPS_Tool
                 // get current gateway
                 args = $"netsh interface ipv6 show route | findstr \"::/0\"";
                 resultCmd = StartProcess("cmd.exe", "/c " + args, "runas");
-                var gatewatList = resultCmd.Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries).Select(x => x.Split(' ')[38]).Where(x => !x.StartsWith("fe80") && !string.IsNullOrWhiteSpace(x)).ToArray();
+                var gatewayList = resultCmd.Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries)
+                                        .Select(x => x.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries)
+                                            .Where(y => Regex.IsMatch(y, @"(?:^|(?<=\s))(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9]))(?=\s|$)")).ToArray()[0])
+                                        .ToArray();
 
                 // delete current gateway
-                foreach (var gateway in gatewatList)
+                foreach (var gateway in gatewayList)
                 {
                     args = $"route delete ::/0 {gateway}";
                     StartProcess("cmd.exe", "/c " + args, "runas");

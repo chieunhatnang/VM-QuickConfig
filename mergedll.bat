@@ -1,0 +1,1 @@
+.\packages\ILMerge.3.0.29\tools\net452\ILMerge.exe /out:".\export\VMQuickConfig.exe" ".\bin\Release\VMQuickConfig.exe" ".\bin\Release\*.dll" /target:winexe /targetplatform:v4,C:\Windows\Microsoft.NET\Framework64\v4.0.30319 /wildcards

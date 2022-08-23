@@ -1,2 +1,14 @@
-bin/
-obj/
+.vs
+bin/*
+obj/*
+packages/*
+.gitignore
+
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
