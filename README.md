@@ -30,6 +30,7 @@ Some optimizations and settings that you may need:
 - Disable driver signature to allow you install driver from third-party provider
 - Optimizing Remote Desktop Protocol for smoother remote
 - Delete temporary folder
+- Setting time zone.
 ### Easy software installing tool
 Some popular softwares are integrated for easier install. They are set to silent install so they will not ask any questions.
 #### Browsers
@@ -56,3 +57,8 @@ Some popular softwares are integrated for easier install. They are set to silent
 - Microsoft .NET framework 4.8
 - 7zip
 - WinRAR
+## Static linking build
+By default, VMQuickConfig buid will create the 2 following DLL files in the Releases folder: 
+- Microsoft.Management.Infrastructure.dll
+- System.Management.Automation.dll
+If you want to import all DLL files in to a single executable files(static linking), run the batch script: mergedll.bat. The merged executable files will be put in the /export folder.
